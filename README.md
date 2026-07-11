@@ -1,6 +1,6 @@
-# Sentinel — FuSa Review Room
+# FuSa Fieldnotes
 
-A focused prototype for semiconductor functional-safety review. The interface demonstrates an evidence-grounded AI workspace: safety-package findings, connected artefacts, and a private assistant that only answers from the linked package.
+An editorial website for an independent semiconductor functional-safety consultancy. It combines a consultancy proposition, specialist service areas and substantive technical fieldnotes.
 
 ## Run locally
 
@@ -9,6 +9,6 @@ npm install
 npm run dev
 ```
 
-## Product boundary
+## Positioning
 
-The assistant proposes, traces and explains. It does not silently certify artefacts or calculate safety metrics. Production FMEDA/SPFM/LFM/PMHF calculations should be deterministic, versioned services with their inputs and outputs retained for review.
+The consultancy is expert-led. AI support is positioned as a bounded method for evidence retrieval, comparison and review preparation—not as an autonomous safety decision-maker.
