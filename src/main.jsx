@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
   Activity, ArrowUpRight, Bell, Bot, Check, ChevronDown, ChevronRight,
-  CircleHelp, Clock3, FileCheck2, FileSpreadsheet, FileText, Filter,
+  CircleHelp, CircuitBoard, Clock3, Cpu, FileCheck2, FileSpreadsheet, FileText, Filter,
   FolderOpen, LayoutDashboard, Library, Link2, ListFilter, LockKeyhole,
   Menu, MessageSquareText, MoreHorizontal, Plus, Search, Send, Settings,
-  ShieldAlert, ShieldCheck, Sparkles, Upload, Users, X
+  ShieldAlert, Sparkles, Upload, Users, X, Zap
 } from 'lucide-react'
 import './styles.css'
 
@@ -41,8 +41,8 @@ function App() {
 
   return <div className="app-shell">
     <aside className="sidebar">
-      <div className="brand"><div className="brand-mark"><ShieldCheck size={18}/></div><span>sentinel</span></div>
-      <div className="workspace-switcher"><div className="workspace-dot">N</div><div><strong>Northstar Semicon</strong><span>Safety workspace</span></div><ChevronDown size={15}/></div>
+      <div className="brand"><div className="brand-mark"><Cpu size={18}/></div><div className="brand-type"><span>sentinel<span className="brand-ai">.ai</span></span><small>SILICON SAFETY</small></div></div>
+      <div className="workspace-switcher"><div className="workspace-dot"><CircuitBoard size={15}/></div><div><strong>Northstar Semicon</strong><span>FuSa engineering node</span></div><ChevronDown size={15}/></div>
       <nav>
         <p className="nav-label">WORKSPACE</p>
         {[
@@ -56,29 +56,29 @@ function App() {
     </aside>
 
     <main>
-      <header className="topbar"><div className="crumb"><span>Safety packages</span><ChevronRight size={14}/><strong>Ceres SoC · Rev 0.9</strong></div><div className="top-actions"><button className="icon-btn"><Search size={18}/></button><button className="icon-btn"><Bell size={18}/><i></i></button><button className="outline-btn" onClick={() => notify('Share link copied to clipboard')}>Share <ArrowUpRight size={15}/></button></div></header>
+      <header className="topbar"><div className="crumb"><span>SoC safety packages</span><ChevronRight size={14}/><strong>CERES-7 / RTL-R09</strong></div><div className="top-actions"><div className="silicon-status"><i></i><span>ANALYSIS CORE</span><b>NOMINAL</b></div><button className="icon-btn"><Search size={18}/></button><button className="icon-btn"><Bell size={18}/><i></i></button><button className="outline-btn" onClick={() => notify('Share link copied to clipboard')}>Share <ArrowUpRight size={15}/></button></div></header>
       <section className="content">
         <div className="hero-row">
-          <div><div className="eyebrow"><span></span> REVIEW ROOM</div><h1>Ceres SoC safety package</h1><p className="sub">A live, evidence-grounded review of your functional-safety collateral.</p></div>
+          <div><div className="eyebrow"><span></span> SILICON SAFETY REVIEW / LIVE</div><h1>Ceres-7 SoC safety package</h1><p className="sub">Evidence-grounded analysis across the device safety architecture.</p><div className="silicon-tags"><span><Cpu size={12}/> 5 nm SoC</span><span><Zap size={12}/> ASIL D</span><span><CircuitBoard size={12}/> 42 IP blocks</span><span>RTL-R09</span></div></div>
           <div className="hero-actions"><button className="secondary-btn" onClick={() => notify('Report generation started')}><FileText size={16}/> Export review</button><button className="primary-btn" onClick={() => setShowUpload(true)}><Plus size={17}/> Add evidence</button></div>
         </div>
 
         <div className="metric-grid">
           <Metric icon={ShieldAlert} label="Open findings" value="3" note="1 needs attention" tone="amber" />
-          <Metric icon={Link2} label="Evidence coverage" value="86%" note="12 claims unlinked" tone="mint" />
+          <Metric icon={CircuitBoard} label="Mechanism coverage" value="86%" note="12 claims unlinked" tone="mint" />
           <Metric icon={FileCheck2} label="Review progress" value="72%" note="31 of 43 checks" tone="blue" />
           <Metric icon={Clock3} label="Last analysis" value="09:42" note="Today" tone="slate" />
         </div>
 
         <div className="work-grid">
           <section className="panel findings-panel">
-            <div className="panel-head"><div><h2>AI review findings</h2><p>Cross-document inconsistencies and missing evidence</p></div><button className="text-btn">View all <ChevronRight size={15}/></button></div>
+            <div className="panel-head"><div><span className="panel-code">SAFETY_NET / FINDINGS</span><h2>AI review findings</h2><p>Cross-document inconsistencies and missing evidence</p></div><button className="text-btn">View all <ChevronRight size={15}/></button></div>
             <div className="finding-filter"><button className="filter-active"><ListFilter size={14}/> All findings <b>3</b></button><button>High <b>1</b></button><button>Medium <b>1</b></button><button>Low <b>1</b></button><button className="filter-icon"><Filter size={15}/></button></div>
             <div className="finding-list">{findings.map((f) => <article className="finding" key={f.title}><div className={`finding-avatar ${f.level.toLowerCase()}`}>{f.avatar}</div><div className="finding-body"><div className="finding-title"><span className={`severity ${f.level.toLowerCase()}`}>{f.level}</span><h3>{f.title}</h3></div><p>{f.detail}</p><div className="sources"><Link2 size={13}/>{f.sources}</div></div><button className="open-finding" onClick={() => notify(`Opened: ${f.title}`)}><ArrowUpRight size={16}/></button></article>)}</div>
           </section>
 
           <section className="panel assistant-panel">
-            <div className="assistant-head"><div className="ai-orb"><Sparkles size={16}/></div><div><h2>Ask Sentinel</h2><p>Evidence-grounded AI assistant</p></div><span className="online"><i></i> Ready</span></div>
+            <div className="assistant-head"><div className="ai-orb"><Cpu size={16}/></div><div><span className="panel-code">COPILOT CORE / RAG-01</span><h2>Ask Sentinel</h2><p>Semiconductor FuSa reasoning assistant</p></div><span className="online"><i></i> Core online</span></div>
             <div className="chat">{messages.map((m, i) => <div className={`message ${m.by}`} key={i}>{m.by === 'ai' && <div className="mini-orb"><Bot size={13}/></div>}<p>{m.text}</p></div>)}</div>
             <div className="suggestions"><button onClick={() => setQuestion('Which safety manual claims have no evidence?')}>Unlinked safety claims</button><button onClick={() => setQuestion('What changed since the previous revision?')}>Revision impact</button></div>
             <div className="ask-box"><input value={question} onChange={e => setQuestion(e.target.value)} onKeyDown={e => e.key === 'Enter' && ask()} placeholder="Ask about this safety package…"/><button onClick={ask}><Send size={16}/></button></div>
@@ -86,7 +86,7 @@ function App() {
           </section>
         </div>
 
-        <section className="panel docs-panel"><div className="panel-head"><div><h2>Connected evidence</h2><p>Sentinel traces every finding back to these source artefacts.</p></div><button className="text-btn" onClick={() => setShowUpload(true)}><Upload size={15}/> Upload</button></div><div className="doc-table"><div className="doc-row doc-header"><span>ARTEFACT</span><span>ADDED</span><span>STATUS</span><span></span></div>{documents.map(doc => { const Icon = doc.icon; return <div className="doc-row" key={doc.name}><div className="doc-name"><div className={`doc-icon ${doc.color}`}><Icon size={17}/></div><div><strong>{doc.name}</strong><span>{doc.type.toUpperCase()}</span></div></div><span>{doc.date}</span><span className={`doc-status ${doc.color}`}><i></i>{doc.status}</span><button className="row-more"><MoreHorizontal size={18}/></button></div>})}</div></section>
+        <section className="panel docs-panel"><div className="panel-head"><div><span className="panel-code">EVIDENCE_BUS / 04 CONNECTED</span><h2>Connected evidence</h2><p>Sentinel traces every finding back to these source artefacts.</p></div><button className="text-btn" onClick={() => setShowUpload(true)}><Upload size={15}/> Upload</button></div><div className="doc-table"><div className="doc-row doc-header"><span>ARTEFACT / SOURCE</span><span>INGESTED</span><span>BUS STATUS</span><span></span></div>{documents.map(doc => { const Icon = doc.icon; return <div className="doc-row" key={doc.name}><div className="doc-name"><div className={`doc-icon ${doc.color}`}><Icon size={17}/></div><div><strong>{doc.name}</strong><span>{doc.type.toUpperCase()} · SHA256 VERIFIED</span></div></div><span>{doc.date}</span><span className={`doc-status ${doc.color}`}><i></i>{doc.status}</span><button className="row-more"><MoreHorizontal size={18}/></button></div>})}</div></section>
       </section>
     </main>
     {showUpload && <UploadModal close={() => setShowUpload(false)} notify={notify}/>} 
