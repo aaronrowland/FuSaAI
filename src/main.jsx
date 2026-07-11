@@ -299,55 +299,73 @@ function ArticlePage({ article, goHome }) {
 }
 
 function DieFigure() {
-  const dies = Array.from({ length: 64 }, (_, index) => {
-    const col = index % 8
-    const row = Math.floor(index / 8)
-    return { x: 112 + col * 53, y: 104 + row * 53, active: row === 3 && col === 4 }
-  })
-
   return (
-    <div className="wafer-figure" aria-label="Abstract semiconductor wafer map">
-      <div className="wafer-caption"><span>WAFER MAP / NOT TO SCALE</span><b>LOT 26262–D</b></div>
-      <svg viewBox="0 0 640 640" role="img" aria-label="Stylised semiconductor wafer with a highlighted die">
+    <div className="soc-figure" aria-label="Semiconductor safety architecture block diagram">
+      <div className="soc-caption"><span>REFERENCE SoC / SAFETY ARCHITECTURE</span><b>REV 09</b></div>
+      <svg viewBox="0 0 640 600" role="img" aria-label="SoC block diagram showing aligned connections between compute, safety, interconnect, memory, clock and input-output blocks">
         <defs>
-          <clipPath id="wafer-clip"><circle cx="320" cy="312" r="232" /></clipPath>
-          <radialGradient id="wafer-fill" cx="45%" cy="38%" r="70%">
-            <stop offset="0%" stopColor="#263635" />
-            <stop offset="100%" stopColor="#101b1b" />
-          </radialGradient>
-          <filter id="marker-glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="7" result="blur" />
-            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-          </filter>
+          <pattern id="soc-grid" width="16" height="16" patternUnits="userSpaceOnUse">
+            <circle cx="1" cy="1" r="1" fill="#405553" />
+          </pattern>
         </defs>
-        <circle cx="320" cy="312" r="243" fill="none" stroke="#101b1b" strokeWidth="1" strokeDasharray="3 8" />
-        <circle cx="320" cy="312" r="232" fill="url(#wafer-fill)" stroke="#657572" strokeWidth="2" />
-        <g clipPath="url(#wafer-clip)" transform="rotate(-7 320 312)">
-          {dies.map((die, index) => (
-            <rect
-              key={index}
-              x={die.x}
-              y={die.y}
-              width="45"
-              height="45"
-              rx="1"
-              className={die.active ? 'wafer-die active' : 'wafer-die'}
-            />
-          ))}
-          <path d="M78 312H562M320 70V554" className="wafer-axis" />
+        <rect x="38" y="48" width="564" height="494" className="soc-die" />
+        <rect x="54" y="64" width="532" height="462" fill="url(#soc-grid)" className="soc-die-inset" />
+
+        <g className="soc-connectors">
+          <path d="M174 210V258" />
+          <path d="M466 210V258" />
+          <path d="M174 338V388" />
+          <path d="M354 338V388" />
+          <path d="M486 338V388" />
         </g>
-        <path d="M298 547h44l-22 13z" fill="#f3f0e8" />
-        <circle cx="350" cy="292" r="7" className="wafer-marker" filter="url(#marker-glow)" />
-        <path d="M357 287L489 207" className="marker-leader" />
-        <rect x="468" y="167" width="132" height="54" className="marker-label-box" />
-        <text x="482" y="188" className="wafer-label strong">DIE 34 / SELECTED</text>
-        <text x="482" y="205" className="wafer-label">SAFETY CONTEXT D</text>
-        <text x="35" y="305" className="wafer-axis-label">Y / 03</text>
-        <text x="300" y="32" className="wafer-axis-label">X / 04</text>
-        <text x="38" y="603" className="wafer-footer-label">300 mm / 5 nm / AUTOMOTIVE</text>
-        <text x="454" y="603" className="wafer-footer-label">FIELD NOTE 00</text>
+        <g className="soc-ports">
+          <rect x="169" y="205" width="10" height="10" /><rect x="169" y="253" width="10" height="10" />
+          <rect x="461" y="205" width="10" height="10" /><rect x="461" y="253" width="10" height="10" />
+          <rect x="169" y="333" width="10" height="10" /><rect x="169" y="383" width="10" height="10" />
+          <rect x="349" y="333" width="10" height="10" /><rect x="349" y="383" width="10" height="10" />
+          <rect x="481" y="333" width="10" height="10" /><rect x="481" y="383" width="10" height="10" />
+        </g>
+
+        <g className="soc-block">
+          <rect x="78" y="92" width="192" height="118" />
+          <text x="96" y="116" className="soc-block-id">FCR 01</text>
+          <text x="174" y="150" textAnchor="middle" className="soc-block-title">CPU CLUSTER</text>
+          <text x="174" y="172" textAnchor="middle" className="soc-block-sub">LOCKSTEP / MPU</text>
+        </g>
+        <g className="soc-block safety-block">
+          <rect x="370" y="92" width="192" height="118" />
+          <text x="388" y="116" className="soc-block-id">FCR 02 / ASIL D</text>
+          <text x="466" y="150" textAnchor="middle" className="soc-block-title">SAFETY ISLAND</text>
+          <text x="466" y="172" textAnchor="middle" className="soc-block-sub">MONITOR / REACT</text>
+        </g>
+        <g className="soc-block fabric-block">
+          <rect x="78" y="258" width="484" height="80" />
+          <text x="96" y="282" className="soc-block-id">INTERCONNECT 00</text>
+          <text x="320" y="305" textAnchor="middle" className="soc-block-title">SAFETY-AWARE NoC FABRIC</text>
+          <path d="M118 319H522" className="fabric-bus" />
+        </g>
+        <g className="soc-block">
+          <rect x="78" y="388" width="192" height="110" />
+          <text x="96" y="412" className="soc-block-id">MEM 04</text>
+          <text x="174" y="448" textAnchor="middle" className="soc-block-title">SRAM / ECC</text>
+          <text x="174" y="470" textAnchor="middle" className="soc-block-sub">SECDED + SCRUB</text>
+        </g>
+        <g className="soc-block narrow-block">
+          <rect x="314" y="388" width="80" height="110" />
+          <text x="354" y="416" textAnchor="middle" className="soc-block-id">CLK</text>
+          <text x="354" y="449" textAnchor="middle" className="soc-block-title">CLOCK</text>
+          <text x="354" y="469" textAnchor="middle" className="soc-block-sub">MON</text>
+        </g>
+        <g className="soc-block">
+          <rect x="438" y="388" width="124" height="110" />
+          <text x="456" y="412" className="soc-block-id">PERIPH 08</text>
+          <text x="500" y="448" textAnchor="middle" className="soc-block-title">I/O</text>
+          <text x="500" y="470" textAnchor="middle" className="soc-block-sub">CRC / TIMEOUT</text>
+        </g>
+        <text x="40" y="570" className="soc-footer-label">IP → SoC / FAULT-CONTAINMENT VIEW</text>
+        <text x="482" y="570" className="soc-footer-label">FIELD NOTE 00</text>
       </svg>
-      <div className="wafer-legend"><span><i /> Production die</span><span><i className="selected" /> Selected safety context</span></div>
+      <div className="soc-legend"><span><i /> Supporting function</span><span><i className="safety" /> Safety-related function</span></div>
     </div>
   )
 }
