@@ -371,7 +371,30 @@ function DieFigure() {
 }
 
 function DieMiniature() {
-  return <div className="die-mini"><span /><span /><span /><span /><span /><span /><i /><i /></div>
+  return (
+    <div className="die-mini" aria-label="Simplified SoC safety architecture diagram">
+      <svg viewBox="0 0 360 300" role="img" aria-label="Aligned block diagram linking compute and safety functions through an interconnect to memory, clock and input-output blocks">
+        <rect x="18" y="18" width="324" height="264" className="mini-die" />
+        <g className="mini-connectors">
+          <path d="M91 103V128" /><path d="M269 103V128" />
+          <path d="M91 174V199" /><path d="M181 174V199" /><path d="M280 174V199" />
+        </g>
+        <g className="mini-ports">
+          <rect x="87" y="99" width="8" height="8" /><rect x="87" y="124" width="8" height="8" />
+          <rect x="265" y="99" width="8" height="8" /><rect x="265" y="124" width="8" height="8" />
+          <rect x="87" y="170" width="8" height="8" /><rect x="87" y="195" width="8" height="8" />
+          <rect x="177" y="170" width="8" height="8" /><rect x="177" y="195" width="8" height="8" />
+          <rect x="276" y="170" width="8" height="8" /><rect x="276" y="195" width="8" height="8" />
+        </g>
+        <g className="mini-block"><rect x="42" y="48" width="98" height="55" /><text x="91" y="80" textAnchor="middle">CPU</text></g>
+        <g className="mini-block mini-safety"><rect x="220" y="48" width="98" height="55" /><text x="269" y="75" textAnchor="middle">SAFETY</text><text x="269" y="87" textAnchor="middle">ISLAND</text></g>
+        <g className="mini-block mini-fabric"><rect x="42" y="128" width="276" height="46" /><text x="180" y="155" textAnchor="middle">NoC FABRIC</text></g>
+        <g className="mini-block"><rect x="42" y="199" width="98" height="55" /><text x="91" y="231" textAnchor="middle">SRAM / ECC</text></g>
+        <g className="mini-block"><rect x="158" y="199" width="46" height="55" /><text x="181" y="231" textAnchor="middle">CLK</text></g>
+        <g className="mini-block"><rect x="242" y="199" width="76" height="55" /><text x="280" y="231" textAnchor="middle">I/O</text></g>
+      </svg>
+    </div>
+  )
 }
 
 function SectionTitle({ eyebrow, title }) {

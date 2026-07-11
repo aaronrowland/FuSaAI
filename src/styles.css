@@ -122,16 +122,17 @@ button { color: inherit; }
 .feature-article { min-height: 420px; border-top: 1px solid #607170; border-bottom: 1px solid #607170; display: grid; grid-template-columns: 42% 58%; cursor: pointer; }
 .feature-art { position: relative; overflow: hidden; display: grid; place-items: center; background: #0d2725; }
 .feature-art > span { position: absolute; left: 23px; bottom: 18px; color: #8ab0a8; font: 500 8px 'IBM Plex Mono'; letter-spacing: 1px; }
-.die-mini { width: 250px; height: 250px; position: relative; border: 1px solid #52736d; transform: rotate(-7deg); background-image: radial-gradient(#284a44 1px, transparent 1px); background-size: 12px 12px; }
-.die-mini::after { content: ''; position: absolute; inset: 18px; border: 1px solid #46655f; }
-.die-mini span { position: absolute; z-index: 2; border: 1px solid #5f7c77; background: #17332f; }
-.die-mini span:nth-child(1) { left: 34px; top: 34px; width: 76px; height: 64px; }
-.die-mini span:nth-child(2) { right: 34px; top: 34px; width: 72px; height: 64px; background: #18513f; border-color: #60d3aa; }
-.die-mini span:nth-child(3) { left: 34px; top: 111px; width: 182px; height: 31px; }
-.die-mini span:nth-child(4) { left: 34px; bottom: 34px; width: 89px; height: 62px; }
-.die-mini span:nth-child(5) { left: 136px; bottom: 34px; width: 35px; height: 62px; }
-.die-mini span:nth-child(6) { right: 34px; bottom: 34px; width: 32px; height: 62px; }
-.die-mini i { position: absolute; z-index: 3; left: 82px; top: 94px; width: 1px; height: 70px; background: #65e4b9; box-shadow: 76px 12px 0 #65e4b9; }
+.die-mini { width: min(88%, 390px); }
+.die-mini svg { width: 100%; height: auto; display: block; }
+.mini-die { fill: #112421; stroke: #58736d; stroke-width: 1.5; }
+.mini-block rect { fill: #17332f; stroke: #66817b; stroke-width: 1.25; }
+.mini-block text { fill: #b7cbc5; font: 600 8px 'IBM Plex Mono'; letter-spacing: .55px; }
+.mini-block.mini-safety rect { fill: #18513f; stroke: #65e4b9; stroke-width: 1.75; }
+.mini-block.mini-safety text { fill: #91f0cc; }
+.mini-block.mini-fabric rect { fill: #28291f; stroke: #b99c5d; }
+.mini-block.mini-fabric text { fill: #dfc77f; }
+.mini-connectors { fill: none; stroke: #65e4b9; stroke-width: 2; shape-rendering: crispEdges; }
+.mini-ports { fill: #65e4b9; stroke: #0d2725; stroke-width: 1; }
 .feature-copy { padding: 60px 8%; align-self: center; }
 .article-meta { display: flex; gap: 15px; color: #87a19c; font: 500 8px 'IBM Plex Mono'; letter-spacing: .7px; text-transform: uppercase; }
 .article-meta span + span::before { content: '/'; margin-right: 15px; color: #526865; }
