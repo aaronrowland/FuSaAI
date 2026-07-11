@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
-  ArrowDown, ArrowLeft, ArrowRight, CheckCircle2, ChevronRight,
-  CircuitBoard, Cpu, FileSpreadsheet, Layers3, Mail, Menu, ShieldCheck,
+  ArrowDown, ArrowLeft, ArrowRight,
+  CircuitBoard, Cpu, FileSpreadsheet, Layers3, Mail, Menu,
   Sparkles, X, Zap
 } from 'lucide-react'
 import './styles.css'
@@ -299,20 +299,55 @@ function ArticlePage({ article, goHome }) {
 }
 
 function DieFigure() {
+  const dies = Array.from({ length: 64 }, (_, index) => {
+    const col = index % 8
+    const row = Math.floor(index / 8)
+    return { x: 112 + col * 53, y: 104 + row * 53, active: row === 3 && col === 4 }
+  })
+
   return (
-    <div className="die-figure" aria-label="Abstract semiconductor die diagram">
-      <div className="die-coordinate top">A0&nbsp;&nbsp;&nbsp; CERES-7 &nbsp;&nbsp;&nbsp;F7</div>
-      <div className="die-coordinate side">SAFETY ARCHITECTURE / REV 09</div>
-      <div className="die">
-        <div className="die-block cpu">CPU<br />CLUSTER</div>
-        <div className="die-block safety"><ShieldCheck size={19} />SAFETY<br />ISLAND</div>
-        <div className="die-block noc">NoC FABRIC</div>
-        <div className="die-block mem">SRAM / ECC</div>
-        <div className="die-block io">I/O</div>
-        <div className="die-block clock">CLK</div>
-        <div className="die-trace trace-a" /><div className="die-trace trace-b" /><div className="die-trace trace-c" />
-      </div>
-      <div className="die-legend"><span><i className="safe" /> Safety related</span><span><i /> Supporting function</span></div>
+    <div className="wafer-figure" aria-label="Abstract semiconductor wafer map">
+      <div className="wafer-caption"><span>WAFER MAP / NOT TO SCALE</span><b>LOT 26262–D</b></div>
+      <svg viewBox="0 0 640 640" role="img" aria-label="Stylised semiconductor wafer with a highlighted die">
+        <defs>
+          <clipPath id="wafer-clip"><circle cx="320" cy="312" r="232" /></clipPath>
+          <radialGradient id="wafer-fill" cx="45%" cy="38%" r="70%">
+            <stop offset="0%" stopColor="#263635" />
+            <stop offset="100%" stopColor="#101b1b" />
+          </radialGradient>
+          <filter id="marker-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="7" result="blur" />
+            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+        </defs>
+        <circle cx="320" cy="312" r="243" fill="none" stroke="#101b1b" strokeWidth="1" strokeDasharray="3 8" />
+        <circle cx="320" cy="312" r="232" fill="url(#wafer-fill)" stroke="#657572" strokeWidth="2" />
+        <g clipPath="url(#wafer-clip)" transform="rotate(-7 320 312)">
+          {dies.map((die, index) => (
+            <rect
+              key={index}
+              x={die.x}
+              y={die.y}
+              width="45"
+              height="45"
+              rx="1"
+              className={die.active ? 'wafer-die active' : 'wafer-die'}
+            />
+          ))}
+          <path d="M78 312H562M320 70V554" className="wafer-axis" />
+        </g>
+        <path d="M298 547h44l-22 13z" fill="#f3f0e8" />
+        <circle cx="350" cy="292" r="7" className="wafer-marker" filter="url(#marker-glow)" />
+        <path d="M357 287L489 207" className="marker-leader" />
+        <rect x="468" y="167" width="132" height="54" className="marker-label-box" />
+        <text x="482" y="188" className="wafer-label strong">DIE 34 / SELECTED</text>
+        <text x="482" y="205" className="wafer-label">SAFETY CONTEXT D</text>
+        <text x="35" y="305" className="wafer-axis-label">Y / 03</text>
+        <text x="300" y="32" className="wafer-axis-label">X / 04</text>
+        <text x="38" y="603" className="wafer-footer-label">300 mm / 5 nm / AUTOMOTIVE</text>
+        <text x="454" y="603" className="wafer-footer-label">FIELD NOTE 00</text>
+      </svg>
+      <div className="wafer-legend"><span><i /> Production die</span><span><i className="selected" /> Selected safety context</span></div>
     </div>
   )
 }
