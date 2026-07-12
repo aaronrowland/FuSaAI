@@ -390,9 +390,9 @@ function CriticalityMark({ compact = false }) {
       <path className="mark-channel mark-channel-inner" d="M65 30A20 20 0 1 0 65 58" />
       <circle className="mark-terminal mark-terminal-copper" cx="65" cy="30" r="4" />
       <circle className="mark-terminal mark-terminal-copper" cx="65" cy="58" r="4" />
-      <rect className="mark-die" x="36" y="36" width="16" height="16" />
-      <path className="mark-pins" d="M40 32v4m4-4v4m4-4v4M40 52v4m4-4v4m4-4v4M32 40h4m-4 4h4m-4 4h4M52 40h4m-4 4h4m-4 4h4" />
-      <circle className="mark-diagnostic" cx="48" cy="40" r="2.2" />
+      <rect className="mark-die" x="42" y="36" width="16" height="16" />
+      <path className="mark-pins" d="M46 32v4m4-4v4m4-4v4M46 52v4m4-4v4m4-4v4M38 40h4m-4 4h4m-4 4h4M58 40h4m-4 4h4m-4 4h4" />
+      <circle className="mark-diagnostic" cx="54" cy="40" r="2.2" />
     </svg>
   )
 }
