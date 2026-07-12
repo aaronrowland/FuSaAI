@@ -123,8 +123,8 @@ const services = [
   {
     icon: Layers3,
     number: '04',
-    title: 'Safety collateral and assurance',
-    text: 'Safety manuals, assumptions of use, traceability, change impact and assessor-ready technical arguments.'
+    title: 'AI-enabled safety processes',
+    text: 'Practical AI integration for existing FuSa workflows, evidence retrieval, traceability, change impact and technical review.'
   }
 ]
 
@@ -166,7 +166,7 @@ function Header({ article, goHome, menuOpen, setMenuOpen }) {
         <CriticalityMark compact />
         <span className="brand-type"><strong>CRITICALITY</strong><small>CONSULTING</small></span>
       </button>
-      <div className="header-datum">SEMICONDUCTOR FUNCTIONAL SAFETY</div>
+      <div className="header-datum">SEMICONDUCTOR × FUSA × APPLIED AI</div>
       <nav className={menuOpen ? 'open' : ''}>
         <button onClick={() => jump('expertise')}>Expertise</button>
         <button onClick={() => jump('insights')}>Insights</button>
@@ -186,27 +186,23 @@ function HomePage({ openArticle }) {
       <section className="hero">
         <div className="hero-index">FIELD NOTE / 00</div>
         <div className="hero-copy">
-          <p className="kicker">Independent semiconductor FuSa consultancy</p>
+          <p className="kicker">Semiconductor design · Functional safety · Applied AI</p>
           <h1>Functional safety,<br /><em>from IP block</em><br />to safety case.</h1>
-          <p className="hero-intro">Engineering support for semiconductor teams building credible safety architectures, FMEDAs, diagnostic evidence and customer collateral.</p>
+          <p className="hero-intro">A unique blend of semiconductor design, functional safety and applied AI experience—bringing new insight to the engineering processes, evidence and tools your teams already use.</p>
           <div className="hero-links">
             <a href="#contact">Discuss a programme <ArrowRight size={16} /></a>
             <a href="#insights" className="quiet-link">Read the fieldnotes <ArrowDown size={15} /></a>
           </div>
         </div>
         <DieFigure />
-        <aside className="hero-note">
-          <span>FOCUS</span>
-          <p>ISO 26262 semiconductor development, with particular attention to the interfaces where safety arguments tend to fracture.</p>
-        </aside>
       </section>
 
       <section className="manifesto">
         <div className="section-label">THE PROPOSITION</div>
         <div className="manifesto-copy">
-          <p className="manifesto-lead">The spreadsheet is not the safety argument.</p>
-          <p>Strong semiconductor functional safety work connects architectural intent, quantitative analysis and verification evidence into something that survives integration, change and independent review.</p>
-          <p>We combine practitioner-led engineering judgement with carefully bounded AI support to interrogate large evidence sets, find inconsistencies and accelerate—not replace—technical review.</p>
+          <p className="manifesto-lead">Deep domain experience, amplified by AI.</p>
+          <p>We connect semiconductor design knowledge with functional safety practice, turning architectural intent, quantitative analysis and verification evidence into arguments that survive integration, change and independent review.</p>
+          <p>Our AI support works within your existing processes. It helps engineers interrogate large evidence sets, surface inconsistencies and find overlooked connections—adding insight without replacing engineering judgement or established controls.</p>
         </div>
       </section>
 
@@ -218,7 +214,6 @@ function HomePage({ openArticle }) {
               <div className="service-top"><span>{number}</span><Icon size={22} /></div>
               <h3>{title}</h3>
               <p>{text}</p>
-              <div className="service-line" />
             </article>
           ))}
         </div>
@@ -259,7 +254,7 @@ function HomePage({ openArticle }) {
         </div>
         <div className="ai-position">
           <Sparkles size={20} />
-          <div><strong>Where AI fits</strong><p>Document comparison, evidence retrieval, traceability suggestions and review preparation—always source-linked and under engineering control.</p></div>
+          <div><strong>AI insight, integrated</strong><p>We apply AI to the processes and evidence you already have: document comparison, evidence retrieval, traceability, consistency analysis and review preparation—always source-linked and under engineering control.</p></div>
         </div>
       </section>
 
@@ -423,7 +418,7 @@ function Contact() {
       <div className="contact-index">START / 01</div>
       <div><p className="kicker">A technical conversation, not a sales call</p><h2>Bring the difficult<br />safety question.</h2></div>
       <div className="contact-copy">
-        <p>For semiconductor safety architecture, FMEDA review, fault-injection evidence or customer collateral support, outline the programme and the decision you need to make.</p>
+        <p>Whether you need semiconductor safety expertise or want to introduce AI insight into an existing FuSa process, outline the programme, current workflow and decision you need to make.</p>
         <a href="mailto:hello@example.com"><Mail size={17} /> Start a confidential conversation <ArrowRight size={16} /></a>
         <small>Replace the placeholder address with your consultancy email before launch.</small>
       </div>
@@ -435,7 +430,7 @@ function Footer({ goHome }) {
   return (
     <footer>
       <button className="footer-brand" onClick={goHome}><CriticalityMark compact /><span><strong>CRITICALITY</strong><small>CONSULTING</small></span></button>
-      <p>Independent semiconductor functional safety consultancy.</p>
+      <p>Semiconductor design, functional safety and applied AI.</p>
       <span>© 2026 / UNITED KINGDOM</span>
     </footer>
   )

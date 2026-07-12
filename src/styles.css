@@ -62,7 +62,7 @@ button { color: inherit; }
   min-height: 720px;
   position: relative;
   display: grid;
-  grid-template-columns: 9% 43% 39% 9%;
+  grid-template-columns: 9% 43% 48%;
   border-bottom: 1px solid var(--ink);
   background-image: linear-gradient(rgba(16, 27, 27, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(16, 27, 27, .045) 1px, transparent 1px);
   background-size: 30px 30px;
@@ -79,10 +79,6 @@ button { color: inherit; }
 .hero-links a:first-child { padding: 13px 17px; background: var(--ink); color: var(--paper); }
 .hero-links a:first-child:hover { background: var(--green-dark); }
 .hero-links .quiet-link { border-bottom: 1px solid var(--ink); padding: 5px 0; }
-.hero-note { align-self: end; min-height: 205px; padding: 28px 22px; border-left: 1px solid var(--line); background: var(--amber); }
-.hero-note span { font: 600 9px 'IBM Plex Mono'; letter-spacing: 1.3px; }
-.hero-note p { margin: 29px 0 0; font: 500 14px/1.55 Newsreader, serif; }
-
 .soc-figure { align-self: center; padding: 30px 22px 20px; }
 .soc-caption { margin: 0 16px -3px; display: flex; justify-content: space-between; color: var(--muted); font: 500 8px 'IBM Plex Mono'; letter-spacing: .8px; }
 .soc-caption b { color: var(--green-dark); font-weight: 600; }
@@ -125,8 +121,6 @@ button { color: inherit; }
 .service-top span { font: 500 10px 'IBM Plex Mono'; }
 .service h3 { margin: 75px 0 17px; font: 500 26px/1.1 Newsreader, serif; }
 .service p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
-.service-line { position: absolute; left: 25px; right: 25px; bottom: 19px; height: 4px; background: var(--paper-deep); }
-.service-line::after { content: ''; display: block; width: 22%; height: 100%; background: var(--green); }
 
 .insights { background: var(--ink); color: var(--paper); }
 .insights .section-title > span { color: #e48742; }
@@ -214,7 +208,6 @@ footer > span { justify-self: end; color: #87786e; font: 500 8px 'IBM Plex Mono'
   .site-header { grid-template-columns: 1fr auto; padding: 0 25px; }
   .header-datum { display: none; }
   .hero { grid-template-columns: 7% 48% 45%; }
-  .hero-note { display: none; }
   .hero-copy { padding-left: 30px; padding-right: 30px; }
   .manifesto-copy { grid-template-columns: 1fr; gap: 25px; }
   .service-grid { grid-template-columns: 1fr 1fr; }
