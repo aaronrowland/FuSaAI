@@ -297,70 +297,67 @@ function DieFigure() {
   return (
     <div className="soc-figure" aria-label="Semiconductor safety architecture block diagram">
       <div className="soc-caption"><span>REFERENCE SoC / SAFETY ARCHITECTURE</span><b>REV 09</b></div>
-      <svg viewBox="0 0 640 600" role="img" aria-label="SoC block diagram showing aligned connections between compute, safety, interconnect, memory, clock and input-output blocks">
+      <svg viewBox="0 0 640 530" role="img" aria-label="SoC block diagram showing aligned connections between compute, safety, interconnect, memory, clock and input-output blocks">
         <defs>
           <pattern id="soc-grid" width="16" height="16" patternUnits="userSpaceOnUse">
             <circle cx="1" cy="1" r="1" fill="#405553" />
           </pattern>
         </defs>
-        <rect x="38" y="48" width="564" height="494" className="soc-die" />
-        <rect x="54" y="64" width="532" height="462" fill="url(#soc-grid)" className="soc-die-inset" />
+        <rect x="38" y="36" width="564" height="468" className="soc-die" />
+        <rect x="54" y="52" width="532" height="436" fill="url(#soc-grid)" className="soc-die-inset" />
 
         <g className="soc-connectors">
-          <path d="M174 210V258" />
-          <path d="M466 210V258" />
-          <path d="M174 338V388" />
-          <path d="M354 338V388" />
-          <path d="M486 338V388" />
+          <path d="M170 202V250" />
+          <path d="M470 202V250" />
+          <path d="M150 330V378" />
+          <path d="M320 330V378" />
+          <path d="M490 330V378" />
         </g>
         <g className="soc-ports">
-          <rect x="169" y="205" width="10" height="10" /><rect x="169" y="253" width="10" height="10" />
-          <rect x="461" y="205" width="10" height="10" /><rect x="461" y="253" width="10" height="10" />
-          <rect x="169" y="333" width="10" height="10" /><rect x="169" y="383" width="10" height="10" />
-          <rect x="349" y="333" width="10" height="10" /><rect x="349" y="383" width="10" height="10" />
-          <rect x="481" y="333" width="10" height="10" /><rect x="481" y="383" width="10" height="10" />
+          <rect x="165" y="197" width="10" height="10" /><rect x="165" y="245" width="10" height="10" />
+          <rect x="465" y="197" width="10" height="10" /><rect x="465" y="245" width="10" height="10" />
+          <rect x="145" y="325" width="10" height="10" /><rect x="145" y="373" width="10" height="10" />
+          <rect x="315" y="325" width="10" height="10" /><rect x="315" y="373" width="10" height="10" />
+          <rect x="485" y="325" width="10" height="10" /><rect x="485" y="373" width="10" height="10" />
         </g>
 
         <g className="soc-block">
-          <rect x="78" y="92" width="192" height="118" />
-          <text x="96" y="116" className="soc-block-id">FCR 01</text>
-          <text x="174" y="150" textAnchor="middle" className="soc-block-title">CPU CLUSTER</text>
-          <text x="174" y="172" textAnchor="middle" className="soc-block-sub">LOCKSTEP / MPU</text>
+          <rect x="98" y="92" width="144" height="110" />
+          <text x="112" y="114" className="soc-block-id">FCR 01</text>
+          <text x="170" y="146" textAnchor="middle" className="soc-block-title">CPU CLUSTER</text>
+          <text x="170" y="168" textAnchor="middle" className="soc-block-sub">LOCKSTEP / MPU</text>
         </g>
         <g className="soc-block safety-block">
-          <rect x="370" y="92" width="192" height="118" />
-          <text x="388" y="116" className="soc-block-id">FCR 02 / ASIL D</text>
-          <text x="466" y="150" textAnchor="middle" className="soc-block-title">SAFETY ISLAND</text>
-          <text x="466" y="172" textAnchor="middle" className="soc-block-sub">MONITOR / REACT</text>
+          <rect x="398" y="92" width="144" height="110" />
+          <text x="412" y="114" className="soc-block-id">FCR 02 / ASIL D</text>
+          <text x="470" y="146" textAnchor="middle" className="soc-block-title">SAFETY ISLAND</text>
+          <text x="470" y="168" textAnchor="middle" className="soc-block-sub">MONITOR / REACT</text>
         </g>
         <g className="soc-block fabric-block">
-          <rect x="78" y="258" width="484" height="80" />
-          <text x="96" y="282" className="soc-block-id">INTERCONNECT 00</text>
-          <text x="320" y="305" textAnchor="middle" className="soc-block-title">SAFETY-AWARE NoC FABRIC</text>
-          <path d="M118 319H522" className="fabric-bus" />
+          <rect x="78" y="250" width="484" height="80" />
+          <text x="96" y="274" className="soc-block-id">INTERCONNECT 00</text>
+          <text x="320" y="297" textAnchor="middle" className="soc-block-title">ON-CHIP INTERCONNECT</text>
+          <path d="M118 311H522" className="fabric-bus" />
         </g>
         <g className="soc-block">
-          <rect x="78" y="388" width="192" height="110" />
-          <text x="96" y="412" className="soc-block-id">MEM 04</text>
-          <text x="174" y="448" textAnchor="middle" className="soc-block-title">SRAM / ECC</text>
-          <text x="174" y="470" textAnchor="middle" className="soc-block-sub">SECDED + SCRUB</text>
-        </g>
-        <g className="soc-block narrow-block">
-          <rect x="314" y="388" width="80" height="110" />
-          <text x="354" y="416" textAnchor="middle" className="soc-block-id">CLK</text>
-          <text x="354" y="449" textAnchor="middle" className="soc-block-title">CLOCK</text>
-          <text x="354" y="469" textAnchor="middle" className="soc-block-sub">MON</text>
+          <rect x="78" y="378" width="144" height="110" />
+          <text x="92" y="400" className="soc-block-id">MEM 04</text>
+          <text x="150" y="434" textAnchor="middle" className="soc-block-title">SRAM / ECC</text>
+          <text x="150" y="456" textAnchor="middle" className="soc-block-sub">SECDED + SCRUB</text>
         </g>
         <g className="soc-block">
-          <rect x="438" y="388" width="124" height="110" />
-          <text x="456" y="412" className="soc-block-id">PERIPH 08</text>
-          <text x="500" y="448" textAnchor="middle" className="soc-block-title">I/O</text>
-          <text x="500" y="470" textAnchor="middle" className="soc-block-sub">CRC / TIMEOUT</text>
+          <rect x="248" y="378" width="144" height="110" />
+          <text x="262" y="400" className="soc-block-id">CLK 06</text>
+          <text x="320" y="434" textAnchor="middle" className="soc-block-title">CLOCK</text>
+          <text x="320" y="456" textAnchor="middle" className="soc-block-sub">MONITOR</text>
         </g>
-        <text x="40" y="570" className="soc-footer-label">IP → SoC / FAULT-CONTAINMENT VIEW</text>
-        <text x="482" y="570" className="soc-footer-label">FIELD NOTE 00</text>
+        <g className="soc-block">
+          <rect x="418" y="378" width="144" height="110" />
+          <text x="432" y="400" className="soc-block-id">PERIPH 08</text>
+          <text x="490" y="434" textAnchor="middle" className="soc-block-title">I/O</text>
+          <text x="490" y="456" textAnchor="middle" className="soc-block-sub">CRC / TIMEOUT</text>
+        </g>
       </svg>
-      <div className="soc-legend"><span><i /> Supporting function</span><span><i className="safety" /> Safety-related function</span></div>
     </div>
   )
 }
@@ -383,7 +380,7 @@ function DieMiniature() {
         </g>
         <g className="mini-block"><rect x="42" y="48" width="98" height="55" /><text x="91" y="80" textAnchor="middle">CPU</text></g>
         <g className="mini-block mini-safety"><rect x="220" y="48" width="98" height="55" /><text x="269" y="75" textAnchor="middle">SAFETY</text><text x="269" y="87" textAnchor="middle">ISLAND</text></g>
-        <g className="mini-block mini-fabric"><rect x="42" y="128" width="276" height="46" /><text x="180" y="155" textAnchor="middle">NoC FABRIC</text></g>
+        <g className="mini-block mini-fabric"><rect x="42" y="128" width="276" height="46" /><text x="180" y="155" textAnchor="middle">ON-CHIP INTERCONNECT</text></g>
         <g className="mini-block"><rect x="42" y="199" width="98" height="55" /><text x="91" y="231" textAnchor="middle">SRAM / ECC</text></g>
         <g className="mini-block"><rect x="158" y="199" width="46" height="55" /><text x="181" y="231" textAnchor="middle">CLK</text></g>
         <g className="mini-block"><rect x="242" y="199" width="76" height="55" /><text x="280" y="231" textAnchor="middle">I/O</text></g>

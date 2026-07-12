@@ -97,12 +97,6 @@ button { color: inherit; }
 .soc-connectors { fill: none; stroke: #dd762c; stroke-width: 2; shape-rendering: crispEdges; }
 .soc-ports { fill: #dd762c; stroke: #171717; stroke-width: 1; }
 .fabric-bus { fill: none; stroke: #9b6747; stroke-width: 1; stroke-dasharray: 4 5; }
-.narrow-block .soc-block-title { font-size: 9px; }
-.soc-footer-label { fill: #7f746c; font: 500 8px 'IBM Plex Mono'; letter-spacing: .7px; }
-.soc-legend { margin: -4px 18px 0; display: flex; justify-content: space-between; color: var(--muted); font: 500 8px 'IBM Plex Mono'; }
-.soc-legend span { display: flex; align-items: center; gap: 7px; }
-.soc-legend i { width: 8px; height: 8px; border: 1px solid var(--muted); background: #202020; }
-.soc-legend i.safety { background: var(--green); border-color: var(--green); }
 
 .manifesto { display: grid; grid-template-columns: 25% 75%; border-bottom: 1px solid var(--ink); }
 .section-label { padding: 42px; border-right: 1px solid var(--line); font: 500 9px 'IBM Plex Mono'; letter-spacing: 1.3px; }
@@ -233,7 +227,6 @@ footer > span { justify-self: end; color: #87786e; font: 500 8px 'IBM Plex Mono'
   .hero-links { align-items: flex-start; flex-direction: column; gap: 14px; }
   .soc-figure { padding: 38px 14px 70px; }
   .soc-caption { margin: 0 10px; }
-  .soc-legend { margin: -4px 10px 0; gap: 14px; }
   .manifesto { grid-template-columns: 1fr; }
   .section-label { padding: 22px 24px; border-right: 0; border-bottom: 1px solid var(--line); }
   .manifesto-copy { padding: 55px 24px; }
