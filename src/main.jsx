@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
   ArrowDown, ArrowLeft, ArrowRight,
-  CircuitBoard, Cpu, FileSpreadsheet, Layers3, Mail, Menu,
+  Cpu, FileSpreadsheet, Layers3, Mail, Menu,
   Sparkles, X, Zap
 } from 'lucide-react'
 import './styles.css'
@@ -162,9 +162,9 @@ function Header({ article, goHome, menuOpen, setMenuOpen }) {
 
   return (
     <header className="site-header">
-      <button className="wordmark" onClick={goHome} aria-label="FuSa Fieldnotes home">
-        <span className="wordmark-chip"><CircuitBoard size={18} /></span>
-        <span>FuSa<span>/</span>Fieldnotes</span>
+      <button className="wordmark" onClick={goHome} aria-label="Criticality Consulting home">
+        <CriticalityMark compact />
+        <span className="brand-type"><strong>CRITICALITY</strong><small>CONSULTING</small></span>
       </button>
       <div className="header-datum">SEMICONDUCTOR FUNCTIONAL SAFETY</div>
       <nav className={menuOpen ? 'open' : ''}>
@@ -279,7 +279,7 @@ function ArticlePage({ article, goHome }) {
       </header>
       <div className="article-layout">
         <aside>
-          <div className="article-mark"><CircuitBoard size={23} /><span>FIELDNOTE<br />{article.number}</span></div>
+          <div className="article-mark"><CriticalityMark compact /><span>FIELDNOTE<br />{article.number}</span></div>
           <p>Semiconductor functional safety</p>
         </aside>
         <article className="article-body">
@@ -401,6 +401,22 @@ function SectionTitle({ eyebrow, title }) {
   return <div className="section-title"><span>{eyebrow}</span><h2>{title}</h2></div>
 }
 
+function CriticalityMark({ compact = false }) {
+  return (
+    <svg className={`criticality-mark${compact ? ' compact' : ''}`} viewBox="0 0 88 88" aria-hidden="true">
+      <path className="mark-channel mark-channel-outer" d="M70 20A31 31 0 1 0 70 68" />
+      <circle className="mark-terminal mark-terminal-dark" cx="70" cy="20" r="4.5" />
+      <circle className="mark-terminal mark-terminal-dark" cx="70" cy="68" r="4.5" />
+      <path className="mark-channel mark-channel-inner" d="M65 30A20 20 0 1 0 65 58" />
+      <circle className="mark-terminal mark-terminal-copper" cx="65" cy="30" r="4" />
+      <circle className="mark-terminal mark-terminal-copper" cx="65" cy="58" r="4" />
+      <rect className="mark-die" x="36" y="36" width="16" height="16" />
+      <path className="mark-pins" d="M40 32v4m4-4v4m4-4v4M40 52v4m4-4v4m4-4v4M32 40h4m-4 4h4m-4 4h4M52 40h4m-4 4h4m-4 4h4" />
+      <circle className="mark-diagnostic" cx="48" cy="40" r="2.2" />
+    </svg>
+  )
+}
+
 function Contact() {
   return (
     <section className="contact" id="contact">
@@ -418,7 +434,7 @@ function Contact() {
 function Footer({ goHome }) {
   return (
     <footer>
-      <button className="footer-brand" onClick={goHome}><CircuitBoard size={17} /> FuSa/Fieldnotes</button>
+      <button className="footer-brand" onClick={goHome}><CriticalityMark compact /><span><strong>CRITICALITY</strong><small>CONSULTING</small></span></button>
       <p>Independent semiconductor functional safety consultancy.</p>
       <span>© 2026 / UNITED KINGDOM</span>
     </footer>

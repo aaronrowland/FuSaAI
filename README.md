@@ -1,4 +1,4 @@
-# FuSa Fieldnotes
+# Criticality Consulting
 
 An editorial website for an independent semiconductor functional-safety consultancy. It combines a consultancy proposition, specialist service areas and substantive technical fieldnotes.
 
