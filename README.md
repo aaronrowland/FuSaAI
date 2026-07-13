@@ -1,6 +1,6 @@
 # Criticality Consulting
 
-An editorial website for an independent semiconductor functional-safety consultancy. It combines a consultancy proposition, specialist service areas and substantive technical fieldnotes.
+An editorial website for an independent semiconductor functional-safety consultancy. It combines a consultancy proposition, specialist service areas and substantive technical insights.
 
 ## Run locally
 
@@ -17,7 +17,7 @@ Set `SITE_URL` to the final public origin when building for production:
 SITE_URL=https://example.com npm run build
 ```
 
-The build creates static HTML entry points for every Fieldnote. When `SITE_URL` is set it also adds absolute canonical and social URLs, generates `sitemap.xml`, and adds the sitemap location to `robots.txt`.
+The build creates static HTML entry points for the insights index and every technical note. When `SITE_URL` is set it also adds absolute canonical and social URLs, generates `sitemap.xml`, and adds the sitemap location to `robots.txt`. Legacy `/fieldnotes/...` URLs redirect to their corresponding `/insights/...` pages.
 
 ## Positioning
 

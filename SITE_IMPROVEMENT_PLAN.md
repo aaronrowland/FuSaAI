@@ -4,7 +4,7 @@ This plan addresses the commercial, content, accessibility, responsive-design an
 
 ## Implementation status
 
-- **Completed locally:** consultancy proposition, concrete AI applications, engagement types, permanent Fieldnote routes, browser history, accessible article links, mobile-menu semantics, keyboard focus treatment, reduced-motion support, responsive diagram, responsive spacing, favicons, social-card asset, structured data and pre-rendered Fieldnote metadata.
+- **Completed locally:** consultancy proposition, concrete AI applications, engagement types, a dedicated insights page, permanent technical-note routes, legacy Fieldnote redirects, browser history, accessible article links, mobile-menu semantics, keyboard focus treatment, reduced-motion support, responsive diagram, responsive spacing, favicons, social-card asset, structured data and pre-rendered article metadata.
 - **Awaiting business details:** contact email, removal of the contact placeholder, consultant profile, LinkedIn URL and any registered-company information.
 - **Awaiting final domain:** set `SITE_URL` in the production build environment to generate absolute canonical URLs, `sitemap.xml` and the sitemap entry in `robots.txt`.
 - **Still required before launch:** production Cloudflare route testing, final domain metadata validation and a final deployed Lighthouse review.
@@ -62,13 +62,14 @@ This plan addresses the commercial, content, accessibility, responsive-design an
 - A prospective customer can recognise at least one relevant engagement or AI use case.
 - The language does not imply that AI replaces engineering judgement.
 
-## Phase 3 — Create permanent Fieldnote routes
+## Phase 3 — Create permanent insights routes
 
 - Add React Router or a suitably lightweight routing equivalent.
-- Give each Fieldnote a permanent URL, for example:
-  - `/fieldnotes/fmeda-customer-boundary/`
-  - `/fieldnotes/diagnostic-coverage-evidence/`
-  - `/fieldnotes/ip-to-soc-assumptions/`
+- Give each technical note a permanent URL, for example:
+  - `/insights/fmeda-customer-boundary/`
+  - `/insights/diagnostic-coverage-evidence/`
+  - `/insights/ip-to-soc-assumptions/`
+- Preserve legacy `/fieldnotes/...` URLs as redirects.
 - Make browser back and forward navigation work correctly.
 - Ensure direct visits and page refreshes work on Cloudflare.
 - Convert Fieldnote cards into genuine links.

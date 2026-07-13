@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
-  ArrowDown, ArrowLeft, ArrowRight,
+  ArrowLeft, ArrowRight,
   Cpu, FileSpreadsheet, Layers3, Mail, Menu,
   Sparkles, X, Zap
 } from 'lucide-react'
@@ -143,20 +143,25 @@ const aiApplications = [
 
 const HOME_TITLE = 'Criticality Consulting — Semiconductor Functional Safety'
 const HOME_DESCRIPTION = 'Independent semiconductor functional safety consultancy combining semiconductor design, FuSa engineering and applied AI.'
-const articlePath = (article) => `/fieldnotes/${article.slug}/`
+const INSIGHTS_PATH = '/insights/'
+const INSIGHTS_TITLE = 'Technical Insights — Criticality Consulting'
+const INSIGHTS_DESCRIPTION = 'Technical notes on semiconductor functional safety, FMEDA, diagnostic coverage, integration assumptions and applied AI.'
+const articlePath = (article) => `${INSIGHTS_PATH}${article.slug}/`
 const articleFromPath = (pathname) => {
   const normalizedPath = pathname.endsWith('/') ? pathname : `${pathname}/`
-  return articles.find((item) => articlePath(item) === normalizedPath) || null
+  return articles.find((item) => articlePath(item) === normalizedPath || `/fieldnotes/${item.slug}/` === normalizedPath) || null
 }
+const isInsightsPath = (pathname) => (pathname.endsWith('/') ? pathname : `${pathname}/`) === INSIGHTS_PATH
 
 function isModifiedClick(event) {
   return event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey
 }
 
-function updateMetadata(article) {
-  const title = article ? `${article.title} — Criticality Fieldnotes` : HOME_TITLE
-  const description = article?.standfirst || HOME_DESCRIPTION
-  const canonicalUrl = `${window.location.origin}${article ? articlePath(article) : '/'}`
+function updateMetadata(article, insightsOpen) {
+  const title = article ? `${article.title} — Criticality Insights` : insightsOpen ? INSIGHTS_TITLE : HOME_TITLE
+  const description = article?.standfirst || (insightsOpen ? INSIGHTS_DESCRIPTION : HOME_DESCRIPTION)
+  const canonicalPath = article ? articlePath(article) : insightsOpen ? INSIGHTS_PATH : '/'
+  const canonicalUrl = `${window.location.origin}${canonicalPath}`
   const setMeta = (selector, attribute, value) => {
     const element = document.querySelector(selector)
     if (element) element.setAttribute(attribute, value)
@@ -191,7 +196,16 @@ function updateMetadata(article) {
         author: { '@type': 'Organization', name: 'Criticality Consulting' },
         publisher: { '@type': 'Organization', name: 'Criticality Consulting' }
       }
-    : {
+    : insightsOpen
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: 'Criticality Insights',
+          description: INSIGHTS_DESCRIPTION,
+          url: canonicalUrl,
+          hasPart: articles.map((item) => ({ '@type': 'Article', headline: item.title, url: `${window.location.origin}${articlePath(item)}` }))
+        }
+      : {
         '@context': 'https://schema.org',
         '@type': 'ProfessionalService',
         name: 'Criticality Consulting',
@@ -207,11 +221,14 @@ function updateMetadata(article) {
 
 function App() {
   const [article, setArticle] = useState(() => articleFromPath(window.location.pathname))
+  const [insightsOpen, setInsightsOpen] = useState(() => isInsightsPath(window.location.pathname))
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const syncRoute = () => {
-      setArticle(articleFromPath(window.location.pathname))
+      const routedArticle = articleFromPath(window.location.pathname)
+      setArticle(routedArticle)
+      setInsightsOpen(!routedArticle && isInsightsPath(window.location.pathname))
       setMenuOpen(false)
       const targetId = window.location.hash.slice(1)
       if (targetId) setTimeout(() => document.getElementById(targetId)?.scrollIntoView(), 0)
@@ -219,18 +236,31 @@ function App() {
     }
 
     window.addEventListener('popstate', syncRoute)
+    const initialArticle = articleFromPath(window.location.pathname)
+    if (initialArticle && window.location.pathname.startsWith('/fieldnotes/')) window.history.replaceState({}, '', articlePath(initialArticle))
     const initialTargetId = window.location.hash.slice(1)
     if (initialTargetId) setTimeout(() => document.getElementById(initialTargetId)?.scrollIntoView(), 0)
     return () => window.removeEventListener('popstate', syncRoute)
   }, [])
 
-  useEffect(() => updateMetadata(article), [article])
+  useEffect(() => updateMetadata(article, insightsOpen), [article, insightsOpen])
 
   const openArticle = (item, event) => {
     if (event && isModifiedClick(event)) return
     event?.preventDefault()
     window.history.pushState({}, '', articlePath(item))
     setArticle(item)
+    setInsightsOpen(false)
+    setMenuOpen(false)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const openInsights = (event) => {
+    if (event && isModifiedClick(event)) return
+    event?.preventDefault()
+    window.history.pushState({}, '', INSIGHTS_PATH)
+    setArticle(null)
+    setInsightsOpen(true)
     setMenuOpen(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -240,6 +270,7 @@ function App() {
     event?.preventDefault()
     window.history.pushState({}, '', destination)
     setArticle(null)
+    setInsightsOpen(false)
     setMenuOpen(false)
     const targetId = destination.split('#')[1]
     if (targetId) setTimeout(() => document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' }), 0)
@@ -248,14 +279,18 @@ function App() {
 
   return (
     <div className="site-shell">
-      <Header article={article} goHome={goHome} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-      {article ? <ArticlePage article={article} goHome={goHome} /> : <HomePage openArticle={openArticle} />}
+      <Header interior={Boolean(article || insightsOpen)} goHome={goHome} openInsights={openInsights} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      {article
+        ? <ArticlePage article={article} openInsights={openInsights} />
+        : insightsOpen
+          ? <InsightsPage openArticle={openArticle} />
+          : <HomePage openArticle={openArticle} openInsights={openInsights} />}
       <Footer goHome={goHome} />
     </div>
   )
 }
 
-function Header({ article, goHome, menuOpen, setMenuOpen }) {
+function Header({ interior, goHome, openInsights, menuOpen, setMenuOpen }) {
   useEffect(() => {
     if (!menuOpen) return undefined
     const closeOnEscape = (event) => event.key === 'Escape' && setMenuOpen(false)
@@ -265,7 +300,7 @@ function Header({ article, goHome, menuOpen, setMenuOpen }) {
 
   const jump = (event, id) => {
     setMenuOpen(false)
-    if (!article) return
+    if (!interior) return
     if (isModifiedClick(event)) return
     event.preventDefault()
     goHome(undefined, `/#${id}`)
@@ -280,7 +315,7 @@ function Header({ article, goHome, menuOpen, setMenuOpen }) {
       <div className="header-datum">SEMICONDUCTOR × FUSA × APPLIED AI</div>
       <nav id="primary-navigation" className={menuOpen ? 'open' : ''} aria-label="Primary navigation">
         <a href="/#expertise" onClick={(event) => jump(event, 'expertise')}>Expertise</a>
-        <a href="/#insights" onClick={(event) => jump(event, 'insights')}>Insights</a>
+        <a href={INSIGHTS_PATH} onClick={openInsights}>Insights</a>
         <a href="/#approach" onClick={(event) => jump(event, 'approach')}>Approach</a>
         <a className="nav-contact" href="/#contact" onClick={(event) => jump(event, 'contact')}>Start a conversation <ArrowRight size={14} /></a>
       </nav>
@@ -291,18 +326,18 @@ function Header({ article, goHome, menuOpen, setMenuOpen }) {
   )
 }
 
-function HomePage({ openArticle }) {
+function HomePage({ openArticle, openInsights }) {
   return (
     <main>
       <section className="hero">
-        <div className="hero-index">FIELD NOTE / 00</div>
+        <div className="hero-index">REFERENCE / 00</div>
         <div className="hero-copy">
           <p className="kicker">Semiconductor design · Functional safety · Applied AI</p>
           <h1>Functional safety,<br /><em>from safety concept</em><br />to trusted silicon.</h1>
           <p className="hero-intro">A unique blend of semiconductor design, functional safety and applied AI experience—bringing new insight to the engineering processes, evidence and tools your teams already use.</p>
           <div className="hero-links">
             <a href="#contact">Discuss a programme <ArrowRight size={16} /></a>
-            <a href="#insights" className="quiet-link">Read the fieldnotes <ArrowDown size={15} /></a>
+            <a href={INSIGHTS_PATH} className="quiet-link" onClick={openInsights}>Read our insights <ArrowRight size={15} /></a>
           </div>
         </div>
         <DieFigure />
@@ -335,29 +370,18 @@ function HomePage({ openArticle }) {
         </div>
       </section>
 
-      <section className="insights" id="insights">
-        <SectionTitle eyebrow="Latest fieldnotes" title="Working notes on semiconductor safety." />
-        <a className="feature-article" href={articlePath(articles[0])} onClick={(event) => openArticle(articles[0], event)}>
-          <div className="feature-art"><FieldnoteCover article={articles[0]} /></div>
-          <div className="feature-copy">
-            <div className="article-meta"><span>{articles[0].category}</span><span>{articles[0].read}</span></div>
-            <h3>{articles[0].title}</h3>
-            <p>{articles[0].standfirst}</p>
-            <span className="read-fieldnote">Read fieldnote <ArrowRight size={15} /></span>
-          </div>
-        </a>
-        <div className="article-list">
-          {articles.slice(1).map((item) => (
-            <article key={item.slug}>
-              <a className="article-link" href={articlePath(item)} onClick={(event) => openArticle(item, event)}>
-                <span className="article-number">{item.number}</span>
-                <div><div className="article-meta"><span>{item.category}</span><span>{item.read}</span></div><h3>{item.title}</h3></div>
-                <p>{item.standfirst}</p>
-                <ArrowRight size={18} />
-              </a>
-            </article>
-          ))}
+      <section className="insights-teaser" id="insights">
+        <div className="insights-teaser-copy">
+          <SectionTitle eyebrow="Technical insight" title="Evidence of how we think." />
+          <p>Concise analysis of evidence gaps, integration assumptions and safety claims—the same questions that shape our consultancy work.</p>
+          <a className="insights-index-link" href={INSIGHTS_PATH} onClick={openInsights}>Explore all insights <ArrowRight size={15} /></a>
         </div>
+        <a className="insights-teaser-note" href={articlePath(articles[0])} onClick={(event) => openArticle(articles[0], event)}>
+          <div className="teaser-note-meta"><span>NOTE {articles[0].number}</span><span>{articles[0].category} / {articles[0].read}</span></div>
+          <h3>{articles[0].title}</h3>
+          <p>{articles[0].standfirst}</p>
+          <span className="read-fieldnote">Read technical note <ArrowRight size={15} /></span>
+        </a>
       </section>
 
       <section className="approach" id="approach">
@@ -393,10 +417,53 @@ function HomePage({ openArticle }) {
   )
 }
 
-function ArticlePage({ article, goHome }) {
+function InsightsPage({ openArticle }) {
+  return (
+    <main className="insights-page">
+      <header className="insights-page-hero">
+        <div className="insights-page-index">INSIGHTS / 01</div>
+        <div>
+          <p className="kicker">Semiconductor functional safety · Applied AI</p>
+          <h1>Engineering notes from the difficult interfaces.</h1>
+          <p>Substantive technical writing on evidence gaps, integration assumptions and safety claims. Each note exposes the reasoning behind the consultancy, not a simplified marketing version of it.</p>
+        </div>
+      </header>
+      <section className="insights insights-library">
+        <div className="insights-library-heading">
+          <span>Published notes</span>
+          <p>Current analysis across FMEDA, diagnostic coverage and semiconductor safety architecture.</p>
+        </div>
+        <a className="feature-article" href={articlePath(articles[0])} onClick={(event) => openArticle(articles[0], event)}>
+          <div className="feature-art"><FieldnoteCover article={articles[0]} /></div>
+          <div className="feature-copy">
+            <div className="article-meta"><span>{articles[0].category}</span><span>{articles[0].read}</span></div>
+            <h2>{articles[0].title}</h2>
+            <p>{articles[0].standfirst}</p>
+            <span className="read-fieldnote">Read technical note <ArrowRight size={15} /></span>
+          </div>
+        </a>
+        <div className="article-list">
+          {articles.slice(1).map((item) => (
+            <article key={item.slug}>
+              <a className="article-link" href={articlePath(item)} onClick={(event) => openArticle(item, event)}>
+                <span className="article-number">{item.number}</span>
+                <div><div className="article-meta"><span>{item.category}</span><span>{item.read}</span></div><h2>{item.title}</h2></div>
+                <p>{item.standfirst}</p>
+                <ArrowRight size={18} />
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+      <Contact />
+    </main>
+  )
+}
+
+function ArticlePage({ article, openInsights }) {
   return (
     <main className="article-page">
-      <div className="article-breadcrumb"><a href="/#insights" onClick={(event) => goHome(event, '/#insights')}><ArrowLeft size={14} /> All fieldnotes</a><span>{article.number} / {article.category}</span></div>
+      <div className="article-breadcrumb"><a href={INSIGHTS_PATH} onClick={openInsights}><ArrowLeft size={14} /> All insights</a><span>{article.number} / {article.category}</span></div>
       <header className="article-hero">
         <div className="article-meta"><span>{article.date}</span><span>{article.read}</span></div>
         <h1>{article.title}</h1>
@@ -404,7 +471,7 @@ function ArticlePage({ article, goHome }) {
       </header>
       <div className="article-layout">
         <aside>
-          <div className="article-mark"><CriticalityMark compact /><span>FIELDNOTE<br />{article.number}</span></div>
+          <div className="article-mark"><CriticalityMark compact /><span>TECHNICAL NOTE<br />{article.number}</span></div>
           <p>Semiconductor functional safety</p>
         </aside>
         <article className="article-body">
@@ -415,7 +482,7 @@ function ArticlePage({ article, goHome }) {
               {section.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </section>
           ))}
-          <div className="article-end"><span>END / {article.number}</span><a href="/#insights" onClick={(event) => goHome(event, '/#insights')}>Return to fieldnotes <ArrowRight size={14} /></a></div>
+          <div className="article-end"><span>END / {article.number}</span><a href={INSIGHTS_PATH} onClick={openInsights}>Return to insights <ArrowRight size={14} /></a></div>
         </article>
       </div>
       <Contact />
@@ -536,9 +603,9 @@ function DieFigure() {
 
 function FieldnoteCover({ article }) {
   return (
-    <div className="fieldnote-cover" aria-label={`Fieldnote ${article.number}: ${article.title}`}>
+    <div className="fieldnote-cover" aria-label={`Technical note ${article.number}: ${article.title}`}>
       <div className="cover-rule" />
-      <span className="cover-series">CRITICALITY / FIELDNOTES</span>
+      <span className="cover-series">CRITICALITY / TECHNICAL NOTE</span>
       <strong className="cover-number">{article.number}</strong>
       <div className="cover-copy">
         <h4>{article.title}</h4>
