@@ -9,6 +9,16 @@ npm install
 npm run dev
 ```
 
+## Production metadata
+
+Set `SITE_URL` to the final public origin when building for production:
+
+```bash
+SITE_URL=https://example.com npm run build
+```
+
+The build creates static HTML entry points for every Fieldnote. When `SITE_URL` is set it also adds absolute canonical and social URLs, generates `sitemap.xml`, and adds the sitemap location to `robots.txt`.
+
 ## Positioning
 
 The consultancy is expert-led. AI support is positioned as a bounded method for evidence retrieval, comparison and review preparation—not as an autonomous safety decision-maker.

@@ -1,21 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
   ArrowDown, ArrowLeft, ArrowRight,
   Cpu, FileSpreadsheet, Layers3, Mail, Menu,
   Sparkles, X, Zap
 } from 'lucide-react'
+import { articleMeta } from './article-meta.js'
 import './styles.css'
 
 const articles = [
   {
-    slug: 'fmeda-customer-boundary',
+    ...articleMeta[0],
     number: '01',
     category: 'FMEDA',
     date: '11 July 2026',
     read: '8 min read',
-    title: 'Why semiconductor FMEDAs fail at the customer boundary',
-    standfirst: 'The arithmetic is rarely the problem. Trouble starts when an internally consistent analysis meets a system context it was never written to survive.',
     accent: 'amber',
     sections: [
       {
@@ -49,13 +48,11 @@ const articles = [
     ]
   },
   {
-    slug: 'diagnostic-coverage-evidence',
+    ...articleMeta[1],
     number: '02',
     category: 'Fault injection',
     date: '04 July 2026',
     read: '6 min read',
-    title: 'Diagnostic coverage is an evidence claim, not a spreadsheet field',
-    standfirst: 'A percentage becomes credible only when its fault population, detection criteria and supporting campaign can be reconstructed.',
     accent: 'green',
     sections: [
       {
@@ -75,13 +72,11 @@ const articles = [
     ]
   },
   {
-    slug: 'ip-to-soc-assumptions',
+    ...articleMeta[2],
     number: '03',
     category: 'Safety architecture',
     date: '25 June 2026',
     read: '7 min read',
-    title: 'From IP to SoC: preserving safety assumptions across integration',
-    standfirst: 'Reuse saves engineering effort only when inherited safety assumptions remain explicit, testable and owned.',
     accent: 'blue',
     sections: [
       {
@@ -128,20 +123,127 @@ const services = [
   }
 ]
 
+const aiApplications = [
+  {
+    number: 'A1',
+    title: 'Cross-document consistency',
+    text: 'Compare safety concepts, manuals, FMEDAs and verification artefacts to expose conflicting assumptions, terminology and obligations.'
+  },
+  {
+    number: 'A2',
+    title: 'Change-impact analysis',
+    text: 'Trace a design or evidence change to the safety claims, mechanisms, assumptions and customer-facing material that may need review.'
+  },
+  {
+    number: 'A3',
+    title: 'Evidence retrieval',
+    text: 'Create source-linked views across large evidence sets so engineers can reconstruct an argument without losing provenance.'
+  }
+]
+
+const HOME_TITLE = 'Criticality Consulting — Semiconductor Functional Safety'
+const HOME_DESCRIPTION = 'Independent semiconductor functional safety consultancy combining semiconductor design, FuSa engineering and applied AI.'
+const articlePath = (article) => `/fieldnotes/${article.slug}/`
+const articleFromPath = (pathname) => {
+  const normalizedPath = pathname.endsWith('/') ? pathname : `${pathname}/`
+  return articles.find((item) => articlePath(item) === normalizedPath) || null
+}
+
+function isModifiedClick(event) {
+  return event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey
+}
+
+function updateMetadata(article) {
+  const title = article ? `${article.title} — Criticality Fieldnotes` : HOME_TITLE
+  const description = article?.standfirst || HOME_DESCRIPTION
+  const canonicalUrl = `${window.location.origin}${article ? articlePath(article) : '/'}`
+  const setMeta = (selector, attribute, value) => {
+    const element = document.querySelector(selector)
+    if (element) element.setAttribute(attribute, value)
+  }
+
+  document.title = title
+  setMeta('meta[name="description"]', 'content', description)
+  setMeta('meta[property="og:title"]', 'content', title)
+  setMeta('meta[property="og:description"]', 'content', description)
+  setMeta('meta[property="og:type"]', 'content', article ? 'article' : 'website')
+  setMeta('meta[property="og:url"]', 'content', canonicalUrl)
+  setMeta('meta[property="og:image"]', 'content', `${window.location.origin}/social-card.png`)
+  setMeta('meta[name="twitter:title"]', 'content', title)
+  setMeta('meta[name="twitter:description"]', 'content', description)
+  setMeta('meta[name="twitter:image"]', 'content', `${window.location.origin}/social-card.png`)
+  let canonical = document.querySelector('link[rel="canonical"]')
+  if (!canonical) {
+    canonical = document.createElement('link')
+    canonical.setAttribute('rel', 'canonical')
+    document.head.appendChild(canonical)
+  }
+  canonical.setAttribute('href', canonicalUrl)
+
+  const structuredData = article
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: article.title,
+        description: article.standfirst,
+        datePublished: article.isoDate,
+        mainEntityOfPage: canonicalUrl,
+        author: { '@type': 'Organization', name: 'Criticality Consulting' },
+        publisher: { '@type': 'Organization', name: 'Criticality Consulting' }
+      }
+    : {
+        '@context': 'https://schema.org',
+        '@type': 'ProfessionalService',
+        name: 'Criticality Consulting',
+        description: HOME_DESCRIPTION,
+        areaServed: 'United Kingdom',
+        url: canonicalUrl,
+        knowsAbout: ['Semiconductor design', 'Functional safety', 'FMEDA', 'Fault injection', 'Applied AI']
+      }
+
+  const script = document.getElementById('structured-data')
+  if (script) script.textContent = JSON.stringify(structuredData)
+}
+
 function App() {
-  const [article, setArticle] = useState(null)
+  const [article, setArticle] = useState(() => articleFromPath(window.location.pathname))
   const [menuOpen, setMenuOpen] = useState(false)
 
-  const openArticle = (item) => {
+  useEffect(() => {
+    const syncRoute = () => {
+      setArticle(articleFromPath(window.location.pathname))
+      setMenuOpen(false)
+      const targetId = window.location.hash.slice(1)
+      if (targetId) setTimeout(() => document.getElementById(targetId)?.scrollIntoView(), 0)
+      else window.scrollTo({ top: 0, behavior: 'auto' })
+    }
+
+    window.addEventListener('popstate', syncRoute)
+    const initialTargetId = window.location.hash.slice(1)
+    if (initialTargetId) setTimeout(() => document.getElementById(initialTargetId)?.scrollIntoView(), 0)
+    return () => window.removeEventListener('popstate', syncRoute)
+  }, [])
+
+  useEffect(() => updateMetadata(article), [article])
+
+  const openArticle = (item, event) => {
+    if (event && isModifiedClick(event)) return
+    event?.preventDefault()
+    window.history.pushState({}, '', articlePath(item))
     setArticle(item)
     setMenuOpen(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const goHome = () => {
+  const goHome = (event, destination = '/') => {
+    if (event && isModifiedClick(event)) return
+    event?.preventDefault()
+    window.history.pushState({}, '', destination)
     setArticle(null)
     setMenuOpen(false)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    const targetId = destination.split('#')[1]
+    if (targetId) setTimeout(() => document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' }), 0)
+    else window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
@@ -154,26 +256,35 @@ function App() {
 }
 
 function Header({ article, goHome, menuOpen, setMenuOpen }) {
-  const jump = (id) => {
-    if (article) goHome()
-    setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 80)
+  useEffect(() => {
+    if (!menuOpen) return undefined
+    const closeOnEscape = (event) => event.key === 'Escape' && setMenuOpen(false)
+    document.addEventListener('keydown', closeOnEscape)
+    return () => document.removeEventListener('keydown', closeOnEscape)
+  }, [menuOpen, setMenuOpen])
+
+  const jump = (event, id) => {
     setMenuOpen(false)
+    if (!article) return
+    if (isModifiedClick(event)) return
+    event.preventDefault()
+    goHome(undefined, `/#${id}`)
   }
 
   return (
     <header className="site-header">
-      <button className="wordmark" onClick={goHome} aria-label="Criticality Consulting home">
+      <a className="wordmark" href="/" onClick={goHome} aria-label="Criticality Consulting home">
         <CriticalityMark compact />
         <span className="brand-type"><strong>CRITICALITY</strong><small>CONSULTING</small></span>
-      </button>
+      </a>
       <div className="header-datum">SEMICONDUCTOR × FUSA × APPLIED AI</div>
-      <nav className={menuOpen ? 'open' : ''}>
-        <button onClick={() => jump('expertise')}>Expertise</button>
-        <button onClick={() => jump('insights')}>Insights</button>
-        <button onClick={() => jump('approach')}>Approach</button>
-        <button className="nav-contact" onClick={() => jump('contact')}>Start a conversation <ArrowRight size={14} /></button>
+      <nav id="primary-navigation" className={menuOpen ? 'open' : ''} aria-label="Primary navigation">
+        <a href="/#expertise" onClick={(event) => jump(event, 'expertise')}>Expertise</a>
+        <a href="/#insights" onClick={(event) => jump(event, 'insights')}>Insights</a>
+        <a href="/#approach" onClick={(event) => jump(event, 'approach')}>Approach</a>
+        <a className="nav-contact" href="/#contact" onClick={(event) => jump(event, 'contact')}>Start a conversation <ArrowRight size={14} /></a>
       </nav>
-      <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
+      <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu" aria-expanded={menuOpen} aria-controls="primary-navigation">
         {menuOpen ? <X /> : <Menu />}
       </button>
     </header>
@@ -198,11 +309,12 @@ function HomePage({ openArticle }) {
       </section>
 
       <section className="manifesto">
-        <div className="section-label">THE PROPOSITION</div>
+        <div className="section-label">WHY CRITICALITY</div>
         <div className="manifesto-copy">
-          <p className="manifesto-lead">Deep domain experience, amplified by AI.</p>
-          <p>We connect semiconductor design knowledge with functional safety practice, turning architectural intent, quantitative analysis and verification evidence into arguments that survive integration, change and independent review.</p>
-          <p>Our AI support works within your existing processes. It helps engineers interrogate large evidence sets, surface inconsistencies and find overlooked connections—adding insight without replacing engineering judgement or established controls.</p>
+          <p className="manifesto-lead">One problem. Three disciplines.</p>
+          <p>Semiconductor design knowledge keeps the safety argument connected to architecture, implementation constraints and the realities of IP and SoC integration.</p>
+          <p>Functional safety experience turns that design intent into explicit assumptions, quantitative analysis, verification evidence and reviewable claims.</p>
+          <p>Applied AI helps engineers interrogate those connected artefacts at scale—while sources, decisions and engineering control remain visible.</p>
         </div>
       </section>
 
@@ -217,26 +329,32 @@ function HomePage({ openArticle }) {
             </article>
           ))}
         </div>
+        <div className="engagement-strip" aria-label="Typical engagements">
+          <span>Typical engagements</span>
+          <p>Independent technical review · Architecture and FMEDA support · Evidence and integration review · AI workflow assessment or pilot</p>
+        </div>
       </section>
 
       <section className="insights" id="insights">
         <SectionTitle eyebrow="Latest fieldnotes" title="Working notes on semiconductor safety." />
-        <div className="feature-article" onClick={() => openArticle(articles[0])} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && openArticle(articles[0])}>
+        <a className="feature-article" href={articlePath(articles[0])} onClick={(event) => openArticle(articles[0], event)}>
           <div className="feature-art"><FieldnoteCover article={articles[0]} /></div>
           <div className="feature-copy">
             <div className="article-meta"><span>{articles[0].category}</span><span>{articles[0].read}</span></div>
             <h3>{articles[0].title}</h3>
             <p>{articles[0].standfirst}</p>
-            <button>Read fieldnote <ArrowRight size={15} /></button>
+            <span className="read-fieldnote">Read fieldnote <ArrowRight size={15} /></span>
           </div>
-        </div>
+        </a>
         <div className="article-list">
           {articles.slice(1).map((item) => (
-            <article key={item.slug} onClick={() => openArticle(item)}>
-              <span className="article-number">{item.number}</span>
-              <div><div className="article-meta"><span>{item.category}</span><span>{item.read}</span></div><h3>{item.title}</h3></div>
-              <p>{item.standfirst}</p>
-              <ArrowRight size={18} />
+            <article key={item.slug}>
+              <a className="article-link" href={articlePath(item)} onClick={(event) => openArticle(item, event)}>
+                <span className="article-number">{item.number}</span>
+                <div><div className="article-meta"><span>{item.category}</span><span>{item.read}</span></div><h3>{item.title}</h3></div>
+                <p>{item.standfirst}</p>
+                <ArrowRight size={18} />
+              </a>
             </article>
           ))}
         </div>
@@ -252,9 +370,21 @@ function HomePage({ openArticle }) {
             ['04', 'Transfer', 'Leave a reviewable argument and reusable method—not a consultant-dependent black box.']
           ].map(([n, title, text]) => <div className="approach-step" key={n}><span>{n}</span><h3>{title}</h3><p>{text}</p></div>)}
         </div>
-        <div className="ai-position">
-          <Sparkles size={20} />
-          <div><strong>AI insight, integrated</strong><p>We apply AI to the processes and evidence you already have: document comparison, evidence retrieval, traceability, consistency analysis and review preparation—always source-linked and under engineering control.</p></div>
+        <div className="ai-practice">
+          <div className="ai-practice-heading">
+            <Sparkles size={20} />
+            <div><strong>AI insight, integrated</strong><p>Applied to the processes and evidence your teams already control.</p></div>
+          </div>
+          <div className="ai-use-cases">
+            {aiApplications.map((item) => (
+              <article className="ai-use-case" key={item.number}>
+                <span>{item.number}</span>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))}
+          </div>
+          <p className="ai-control-note">Customer information remains controlled. Outputs stay source-linked and subject to engineering review; AI does not replace safety judgement or established approval controls.</p>
         </div>
       </section>
 
@@ -266,7 +396,7 @@ function HomePage({ openArticle }) {
 function ArticlePage({ article, goHome }) {
   return (
     <main className="article-page">
-      <div className="article-breadcrumb"><button onClick={goHome}><ArrowLeft size={14} /> All fieldnotes</button><span>{article.number} / {article.category}</span></div>
+      <div className="article-breadcrumb"><a href="/#insights" onClick={(event) => goHome(event, '/#insights')}><ArrowLeft size={14} /> All fieldnotes</a><span>{article.number} / {article.category}</span></div>
       <header className="article-hero">
         <div className="article-meta"><span>{article.date}</span><span>{article.read}</span></div>
         <h1>{article.title}</h1>
@@ -285,7 +415,7 @@ function ArticlePage({ article, goHome }) {
               {section.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </section>
           ))}
-          <div className="article-end"><span>END / {article.number}</span><button onClick={goHome}>Return to fieldnotes <ArrowRight size={14} /></button></div>
+          <div className="article-end"><span>END / {article.number}</span><a href="/#insights" onClick={(event) => goHome(event, '/#insights')}>Return to fieldnotes <ArrowRight size={14} /></a></div>
         </article>
       </div>
       <Contact />
@@ -296,8 +426,8 @@ function ArticlePage({ article, goHome }) {
 function DieFigure() {
   return (
     <div className="soc-figure" aria-label="Semiconductor safety architecture block diagram">
-      <div className="soc-caption"><span>REFERENCE SoC / SAFETY ARCHITECTURE</span><b>REV 09</b></div>
-      <svg viewBox="0 0 640 530" role="img" aria-label="SoC block diagram showing aligned connections between compute, safety, interconnect, memory, clock and input-output blocks">
+      <div className="soc-caption"><span>EXAMPLE / SoC SAFETY ARCHITECTURE</span><b>REV 09</b></div>
+      <svg className="soc-diagram-desktop" viewBox="0 0 640 530" role="img" aria-label="Example SoC block diagram showing aligned connections between compute, safety, interconnect, memory, clock and input-output blocks">
         <defs>
           <pattern id="soc-grid" width="16" height="16" patternUnits="userSpaceOnUse">
             <circle cx="1" cy="1" r="1" fill="#405553" />
@@ -358,6 +488,48 @@ function DieFigure() {
           <text x="490" y="456" textAnchor="middle" className="soc-block-sub">CRC / TIMEOUT</text>
         </g>
       </svg>
+      <svg className="soc-diagram-mobile" viewBox="0 0 360 370" role="img" aria-label="Simplified example SoC block diagram showing CPU, safety island, interconnect, memory and input-output blocks">
+        <defs>
+          <pattern id="soc-grid-mobile" width="14" height="14" patternUnits="userSpaceOnUse">
+            <circle cx="1" cy="1" r="1" fill="#405553" />
+          </pattern>
+        </defs>
+        <rect x="8" y="12" width="344" height="346" className="soc-die" />
+        <rect x="20" y="24" width="320" height="322" fill="url(#soc-grid-mobile)" className="soc-die-inset" />
+        <g className="soc-connectors">
+          <path d="M95 126V157" /><path d="M265 126V157" />
+          <path d="M95 231V266" /><path d="M265 231V266" />
+        </g>
+        <g className="soc-ports">
+          <rect x="90" y="121" width="10" height="10" /><rect x="90" y="152" width="10" height="10" />
+          <rect x="260" y="121" width="10" height="10" /><rect x="260" y="152" width="10" height="10" />
+          <rect x="90" y="226" width="10" height="10" /><rect x="90" y="261" width="10" height="10" />
+          <rect x="260" y="226" width="10" height="10" /><rect x="260" y="261" width="10" height="10" />
+        </g>
+        <g className="soc-block">
+          <rect x="38" y="55" width="114" height="71" />
+          <text x="95" y="84" textAnchor="middle" className="soc-block-title">CPU CLUSTER</text>
+          <text x="95" y="105" textAnchor="middle" className="soc-block-sub">LOCKSTEP</text>
+        </g>
+        <g className="soc-block safety-block">
+          <rect x="208" y="55" width="114" height="71" />
+          <text x="265" y="84" textAnchor="middle" className="soc-block-title">SAFETY ISLAND</text>
+          <text x="265" y="105" textAnchor="middle" className="soc-block-sub">MONITOR</text>
+        </g>
+        <g className="soc-block fabric-block">
+          <rect x="38" y="157" width="284" height="74" />
+          <text x="180" y="189" textAnchor="middle" className="soc-block-title">ON-CHIP INTERCONNECT</text>
+          <path d="M72 210H288" className="fabric-bus" />
+        </g>
+        <g className="soc-block">
+          <rect x="38" y="266" width="114" height="57" />
+          <text x="95" y="300" textAnchor="middle" className="soc-block-title">SRAM / ECC</text>
+        </g>
+        <g className="soc-block">
+          <rect x="208" y="266" width="114" height="57" />
+          <text x="265" y="300" textAnchor="middle" className="soc-block-title">I/O + CRC</text>
+        </g>
+      </svg>
     </div>
   )
 }
@@ -414,7 +586,7 @@ function Contact() {
 function Footer({ goHome }) {
   return (
     <footer>
-      <button className="footer-brand" onClick={goHome}><CriticalityMark compact /><span><strong>CRITICALITY</strong><small>CONSULTING</small></span></button>
+      <a className="footer-brand" href="/" onClick={goHome}><CriticalityMark compact /><span><strong>CRITICALITY</strong><small>CONSULTING</small></span></a>
       <p>Semiconductor design, functional safety and applied AI.</p>
       <span>© 2026 / UNITED KINGDOM</span>
     </footer>

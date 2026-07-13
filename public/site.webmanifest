@@ -1,0 +1,17 @@
+{
+  "name": "Criticality Consulting",
+  "short_name": "Criticality",
+  "description": "Semiconductor functional safety consultancy combining semiconductor design, FuSa engineering and applied AI.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f1e9",
+  "theme_color": "#171717",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
