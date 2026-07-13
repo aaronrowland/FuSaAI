@@ -118,8 +118,8 @@ const services = [
   {
     icon: Layers3,
     number: '04',
-    title: 'AI-enabled safety processes',
-    text: 'Practical AI integration for existing FuSa workflows, evidence retrieval, traceability, change impact and technical review.'
+    title: 'AI tool development and integration',
+    text: 'Assess, prototype and develop focused AI tools that integrate with existing design and FuSa workflows, evidence and review controls.'
   }
 ]
 
@@ -142,7 +142,7 @@ const aiApplications = [
 ]
 
 const HOME_TITLE = 'Criticality Consulting — Semiconductor Functional Safety'
-const HOME_DESCRIPTION = 'Independent semiconductor functional safety consultancy combining semiconductor design, FuSa engineering and applied AI.'
+const HOME_DESCRIPTION = 'Independent consultancy combining semiconductor design and functional safety expertise to develop AI tools for existing engineering processes.'
 const INSIGHTS_PATH = '/insights/'
 const INSIGHTS_TITLE = 'Technical Insights — Criticality Consulting'
 const INSIGHTS_DESCRIPTION = 'Technical notes on semiconductor functional safety, FMEDA, diagnostic coverage, integration assumptions and applied AI.'
@@ -333,7 +333,7 @@ function HomePage({ openInsights }) {
         <div className="hero-copy">
           <p className="kicker">Semiconductor design · Functional safety · Applied AI</p>
           <h1>Functional safety,<br /><em>from safety concept</em><br />to trusted silicon.</h1>
-          <p className="hero-intro">A unique blend of semiconductor design, functional safety and applied AI experience—bringing new insight to the engineering processes, evidence and tools your teams already use.</p>
+          <p className="hero-intro">A unique blend of semiconductor design, functional safety and applied AI experience. We strengthen existing engineering processes, then develop focused AI tools that integrate with the workflows, evidence and controls your teams already use.</p>
           <div className="hero-links">
             <a href="#contact">Discuss a programme <ArrowRight size={16} /></a>
             <a href={INSIGHTS_PATH} className="quiet-link" onClick={openInsights}>Read our insights <ArrowRight size={15} /></a>
@@ -348,7 +348,7 @@ function HomePage({ openInsights }) {
           <p className="manifesto-lead">One problem. Three disciplines.</p>
           <p>Semiconductor design knowledge keeps the safety argument connected to architecture, implementation constraints and the realities of IP and SoC integration.</p>
           <p>Functional safety experience turns that design intent into explicit assumptions, quantitative analysis, verification evidence and reviewable claims.</p>
-          <p>Applied AI helps engineers interrogate those connected artefacts at scale—while sources, decisions and engineering control remain visible.</p>
+          <p>Applied AI turns that combined expertise into focused tools for evidence retrieval, consistency checking and change analysis—integrated into existing workflows while sources, decisions and engineering control remain visible.</p>
         </div>
       </section>
 
@@ -365,7 +365,7 @@ function HomePage({ openInsights }) {
         </div>
         <div className="engagement-strip" aria-label="Typical engagements">
           <span>Typical engagements</span>
-          <p>Independent technical review · Architecture and FMEDA support · Evidence and integration review · AI workflow assessment or pilot</p>
+          <p>Independent technical review · Architecture and FMEDA support · Evidence and integration review · AI workflow assessment, tool prototype or integration pilot</p>
         </div>
       </section>
 
@@ -382,7 +382,7 @@ function HomePage({ openInsights }) {
         <div className="ai-practice">
           <div className="ai-practice-heading">
             <Sparkles size={20} />
-            <div><strong>AI insight, integrated</strong><p>Applied to the processes and evidence your teams already control.</p></div>
+            <div><strong>AI tools, integrated</strong><p>We identify worthwhile use cases, develop focused tools around your existing artefacts and connect them to the workflows your engineers already use.</p></div>
           </div>
           <div className="ai-use-cases">
             {aiApplications.map((item) => (
@@ -625,7 +625,7 @@ function Contact() {
     <section className="contact" id="contact">
       <div className="contact-heading"><p className="kicker">A technical conversation, not a sales call</p><h2>Bring the difficult<br />safety question.</h2></div>
       <div className="contact-copy">
-        <p>Whether you need semiconductor safety expertise or want to introduce AI insight into an existing FuSa process, outline the programme, current workflow and decision you need to make.</p>
+        <p>Whether you need semiconductor safety expertise or want to develop an AI tool within an existing design or FuSa process, outline the programme, current workflow and decision you need to make.</p>
         <a href="mailto:hello@example.com"><Mail size={17} /> Start a confidential conversation <ArrowRight size={16} /></a>
         <small>Replace the placeholder address with your consultancy email before launch.</small>
       </div>
