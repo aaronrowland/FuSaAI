@@ -42,7 +42,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--green); outline
 .mark-channel { fill: none; stroke-linecap: round; stroke-width: 6; }
 .mark-channel-outer { stroke: var(--ink); }
 .mark-channel-inner { stroke: var(--green); stroke-width: 5; }
-.mark-terminal { fill: var(--paper); stroke-width: 3; }
+.mark-terminal { fill: var(--paper); stroke-width: 2.5; }
 .mark-terminal-dark { stroke: var(--ink); }
 .mark-terminal-copper { stroke: var(--green); }
 .mark-die { fill: var(--ink); }

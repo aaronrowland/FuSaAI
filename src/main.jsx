@@ -608,11 +608,11 @@ function CriticalityMark({ compact = false }) {
   return (
     <svg className={`criticality-mark${compact ? ' compact' : ''}`} viewBox="0 0 88 88" aria-hidden="true">
       <path className="mark-channel mark-channel-outer" d="M70 20A31 31 0 1 0 70 68" />
-      <circle className="mark-terminal mark-terminal-dark" cx="70" cy="20" r="4.5" />
-      <circle className="mark-terminal mark-terminal-dark" cx="70" cy="68" r="4.5" />
-      <path className="mark-channel mark-channel-inner" d="M62 30A20 20 0 1 0 62 58" />
-      <circle className="mark-terminal mark-terminal-copper" cx="62" cy="30" r="3.5" />
-      <circle className="mark-terminal mark-terminal-copper" cx="62" cy="58" r="3.5" />
+      <circle className="mark-terminal mark-terminal-dark" cx="70" cy="20" r="4" />
+      <circle className="mark-terminal mark-terminal-dark" cx="70" cy="68" r="4" />
+      <path className="mark-channel mark-channel-inner" d="M65 30A20 20 0 1 0 65 58" />
+      <circle className="mark-terminal mark-terminal-copper" cx="65" cy="30" r="3.25" />
+      <circle className="mark-terminal mark-terminal-copper" cx="65" cy="58" r="3.25" />
       <rect className="mark-die" x="42" y="36" width="16" height="16" />
       <path className="mark-pins" d="M46 32v4m4-4v4m4-4v4M46 52v4m4-4v4m4-4v4M38 40h4m-4 4h4m-4 4h4M58 40h4m-4 4h4m-4 4h4" />
       <circle className="mark-diagnostic" cx="54" cy="40" r="2.2" />
