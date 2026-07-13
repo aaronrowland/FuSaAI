@@ -63,14 +63,13 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--green); outline
   min-height: 720px;
   position: relative;
   display: grid;
-  grid-template-columns: 9% 43% 48%;
+  grid-template-columns: 52% 48%;
   border-bottom: 1px solid var(--ink);
   background-image: linear-gradient(rgba(16, 27, 27, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(16, 27, 27, .045) 1px, transparent 1px);
   background-size: 30px 30px;
 }
 
-.hero-index { padding-top: 38px; border-right: 1px solid var(--line); writing-mode: vertical-rl; text-orientation: mixed; justify-self: center; font: 500 9px 'IBM Plex Mono'; letter-spacing: 1.4px; }
-.hero-copy { align-self: center; padding: 70px 58px 70px 45px; }
+.hero-copy { align-self: center; padding: 70px 58px 70px 12vw; }
 .kicker { margin: 0 0 22px; color: var(--green-dark); font: 600 10px 'IBM Plex Mono'; letter-spacing: 1.2px; text-transform: uppercase; }
 .hero h1 { margin: 0; font: 500 clamp(56px, 5.8vw, 86px)/.91 Newsreader, serif; letter-spacing: -4px; }
 .hero h1 em { color: var(--green-dark); font-weight: 400; }
@@ -121,9 +120,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--green); outline
 .engagement-strip span { color: var(--green-dark); font: 600 9px 'IBM Plex Mono'; letter-spacing: 1px; text-transform: uppercase; }
 .engagement-strip p { margin: 0; color: var(--ink-soft); font-size: 11px; line-height: 1.6; }
 
-.insights-page-hero { min-height: 560px; display: grid; grid-template-columns: 10% 90%; border-bottom: 1px solid var(--ink); background-image: linear-gradient(rgba(16,27,27,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(16,27,27,.045) 1px, transparent 1px); background-size: 30px 30px; }
-.insights-page-index { padding-top: 42px; border-right: 1px solid var(--line); writing-mode: vertical-rl; justify-self: center; font: 500 9px 'IBM Plex Mono'; letter-spacing: 1.4px; }
-.insights-page-hero > div:last-child { align-self: center; padding: 90px 11vw 100px 7vw; }
+.insights-page-hero { min-height: 560px; display: grid; grid-template-columns: 1fr; border-bottom: 1px solid var(--ink); background-image: linear-gradient(rgba(16,27,27,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(16,27,27,.045) 1px, transparent 1px); background-size: 30px 30px; }
+.insights-page-hero > div:last-child { align-self: center; padding: 90px 14vw 100px; }
 .insights-page-hero h1 { max-width: 1050px; margin: 0; font: 500 clamp(62px, 7vw, 102px)/.92 Newsreader, serif; letter-spacing: -4px; }
 .insights-page-hero > div:last-child > p:last-child { max-width: 760px; margin: 32px 0 0; color: var(--ink-soft); font: 400 20px/1.55 Newsreader, serif; }
 .insights { background: #eee8de; color: var(--ink); }
@@ -177,9 +175,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--green); outline
 .ai-use-case p { margin: 0; }
 .ai-control-note { margin: 0; padding: 18px 24px; border-top: 1px solid #4d4038; }
 
-.contact { min-height: 520px; display: grid; grid-template-columns: 9% 48% 43%; background: var(--green); border-bottom: 1px solid var(--ink); }
-.contact-index { padding-top: 45px; border-right: 1px solid rgba(16,27,27,.35); writing-mode: vertical-rl; justify-self: center; font: 500 9px 'IBM Plex Mono'; letter-spacing: 1.3px; }
-.contact > div:nth-child(2) { align-self: center; padding: 70px 7vw 70px 55px; }
+.contact { min-height: 520px; display: grid; grid-template-columns: 55% 45%; background: var(--green); border-bottom: 1px solid var(--ink); }
+.contact-heading { align-self: center; padding: 70px 7vw; }
 .contact .kicker { color: var(--ink); }
 .contact h2 { margin: 0; font: 500 clamp(52px, 5.4vw, 78px)/.92 Newsreader, serif; letter-spacing: -3px; }
 .contact-copy { padding: 80px 8vw 80px 50px; border-left: 1px solid rgba(16,27,27,.35); display: flex; flex-direction: column; justify-content: center; }
@@ -227,15 +224,15 @@ footer > span { justify-self: end; color: #87786e; font: 500 8px 'IBM Plex Mono'
 @media (max-width: 1050px) {
   .site-header { grid-template-columns: 1fr auto; padding: 0 25px; }
   .header-datum { display: none; }
-  .hero { grid-template-columns: 7% 48% 45%; }
-  .hero-copy { padding-left: 30px; padding-right: 30px; }
+  .hero { grid-template-columns: 55% 45%; }
+  .hero-copy { padding-left: 10vw; padding-right: 30px; }
   .manifesto-copy { grid-template-columns: 1fr 1fr; gap: 25px; }
   .manifesto-copy .manifesto-lead { grid-column: 1 / -1; }
   .service-grid { grid-template-columns: 1fr 1fr; }
   .service:nth-child(2) { border-right: 0; }
   .service { border-bottom: 1px solid var(--line); }
   .approach-grid { grid-template-columns: 1fr 1fr; }
-  .contact { grid-template-columns: 8% 46% 46%; }
+  .contact { grid-template-columns: 50% 50%; }
 }
 
 @media (max-width: 760px) {
@@ -247,7 +244,6 @@ footer > span { justify-self: end; color: #87786e; font: 500 8px 'IBM Plex Mono'
   .site-header nav a { text-align: left; }
   .menu-toggle { display: block; justify-self: end; }
   .hero { min-height: auto; grid-template-columns: 1fr; }
-  .hero-index { display: none; }
   .hero-copy { padding: 70px 24px 45px; }
   .hero h1 { font-size: 56px; letter-spacing: -2.6px; }
   .hero-intro { font-size: 13px; }
@@ -269,7 +265,6 @@ footer > span { justify-self: end; color: #87786e; font: 500 8px 'IBM Plex Mono'
   .service h3 { margin-top: 38px; }
   .engagement-strip { grid-template-columns: 1fr; gap: 10px; }
   .insights-page-hero { min-height: auto; grid-template-columns: 1fr; }
-  .insights-page-index { display: none; }
   .insights-page-hero > div:last-child { padding: 72px 24px 76px; }
   .insights-page-hero h1 { font-size: 57px; letter-spacing: -2.5px; }
   .insights-page-hero > div:last-child > p:last-child { font-size: 18px; }
@@ -290,8 +285,7 @@ footer > span { justify-self: end; color: #87786e; font: 500 8px 'IBM Plex Mono'
   .ai-use-case:last-child { border-bottom: 0; }
   .ai-use-case h3 { margin-top: 24px; }
   .contact { grid-template-columns: 1fr; }
-  .contact-index { display: none; }
-  .contact > div:nth-child(2) { padding: 58px 24px 26px; }
+  .contact-heading { padding: 58px 24px 26px; }
   .contact h2 { font-size: 58px; }
   .contact-copy { padding: 26px 24px 58px; border-left: 0; }
   footer { padding: 30px 24px; grid-template-columns: 1fr; gap: 16px; }

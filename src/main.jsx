@@ -330,7 +330,6 @@ function HomePage({ openInsights }) {
   return (
     <main>
       <section className="hero">
-        <div className="hero-index">REFERENCE / 00</div>
         <div className="hero-copy">
           <p className="kicker">Semiconductor design · Functional safety · Applied AI</p>
           <h1>Functional safety,<br /><em>from safety concept</em><br />to trusted silicon.</h1>
@@ -407,7 +406,6 @@ function InsightsPage({ openArticle }) {
   return (
     <main className="insights-page">
       <header className="insights-page-hero">
-        <div className="insights-page-index">INSIGHTS / 01</div>
         <div>
           <p className="kicker">Semiconductor functional safety · Applied AI</p>
           <h1>Engineering notes from the difficult interfaces.</h1>
@@ -612,9 +610,9 @@ function CriticalityMark({ compact = false }) {
       <path className="mark-channel mark-channel-outer" d="M70 20A31 31 0 1 0 70 68" />
       <circle className="mark-terminal mark-terminal-dark" cx="70" cy="20" r="4.5" />
       <circle className="mark-terminal mark-terminal-dark" cx="70" cy="68" r="4.5" />
-      <path className="mark-channel mark-channel-inner" d="M65 30A20 20 0 1 0 65 58" />
-      <circle className="mark-terminal mark-terminal-copper" cx="65" cy="30" r="4" />
-      <circle className="mark-terminal mark-terminal-copper" cx="65" cy="58" r="4" />
+      <path className="mark-channel mark-channel-inner" d="M62 30A20 20 0 1 0 62 58" />
+      <circle className="mark-terminal mark-terminal-copper" cx="62" cy="30" r="3.5" />
+      <circle className="mark-terminal mark-terminal-copper" cx="62" cy="58" r="3.5" />
       <rect className="mark-die" x="42" y="36" width="16" height="16" />
       <path className="mark-pins" d="M46 32v4m4-4v4m4-4v4M46 52v4m4-4v4m4-4v4M38 40h4m-4 4h4m-4 4h4M58 40h4m-4 4h4m-4 4h4" />
       <circle className="mark-diagnostic" cx="54" cy="40" r="2.2" />
@@ -625,8 +623,7 @@ function CriticalityMark({ compact = false }) {
 function Contact() {
   return (
     <section className="contact" id="contact">
-      <div className="contact-index">START / 01</div>
-      <div><p className="kicker">A technical conversation, not a sales call</p><h2>Bring the difficult<br />safety question.</h2></div>
+      <div className="contact-heading"><p className="kicker">A technical conversation, not a sales call</p><h2>Bring the difficult<br />safety question.</h2></div>
       <div className="contact-copy">
         <p>Whether you need semiconductor safety expertise or want to introduce AI insight into an existing FuSa process, outline the programme, current workflow and decision you need to make.</p>
         <a href="mailto:hello@example.com"><Mail size={17} /> Start a confidential conversation <ArrowRight size={16} /></a>
