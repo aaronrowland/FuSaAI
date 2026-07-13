@@ -626,7 +626,7 @@ function Contact() {
       <div className="contact-heading"><p className="kicker">A technical conversation, not a sales call</p><h2>Bring the difficult<br />safety question.</h2></div>
       <div className="contact-copy">
         <p>Whether you need semiconductor safety expertise or want to develop an AI tool within an existing design or FuSa process, outline the programme, current workflow and decision you need to make.</p>
-        <a href="mailto:hello@example.com"><Mail size={17} /> Start a confidential conversation <ArrowRight size={16} /></a>
+        <a href="mailto:hello@example.com"><Mail size={17} /> Arrange a technical consultation <ArrowRight size={16} /></a>
         <small>Replace the placeholder address with your consultancy email before launch.</small>
       </div>
     </section>
