@@ -185,8 +185,11 @@ footer > span { justify-self: end; color: #87786e; font: 500 8px 'IBM Plex Mono'
 .article-hero > p { max-width: 790px; margin: 0; color: var(--ink-soft); font: 400 20px/1.5 Newsreader, serif; }
 .article-layout { display: grid; grid-template-columns: 25% 75%; }
 .article-layout > aside { padding: 60px 4vw; border-right: 1px solid var(--line); }
-.article-mark { width: 115px; height: 115px; padding: 16px; border: 1px solid var(--ink); display: flex; flex-direction: column; justify-content: space-between; background: var(--amber); }
-.article-mark span { font: 600 8px/1.5 'IBM Plex Mono'; }
+.article-mark { width: 115px; height: 115px; padding: 16px; border: 1px solid var(--ink); display: flex; flex-direction: column; justify-content: space-between; background: var(--ink); }
+.article-mark .criticality-mark { width: 50px; height: 50px; }
+.article-mark .mark-channel-outer, .article-mark .mark-pins { stroke: var(--paper); }
+.article-mark .mark-terminal { fill: var(--ink); }
+.article-mark span { color: var(--paper); font: 600 8px/1.5 'IBM Plex Mono'; }
 .article-layout > aside > p { max-width: 140px; margin: 20px 0; color: var(--muted); font: 500 9px/1.6 'IBM Plex Mono'; text-transform: uppercase; }
 .article-body { padding: 40px 14vw 100px 8vw; }
 .article-body section { position: relative; padding: 60px 0; border-bottom: 1px solid var(--line); }
