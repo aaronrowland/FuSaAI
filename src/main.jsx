@@ -284,7 +284,7 @@ function App() {
         ? <ArticlePage article={article} openInsights={openInsights} />
         : insightsOpen
           ? <InsightsPage openArticle={openArticle} />
-          : <HomePage openArticle={openArticle} openInsights={openInsights} />}
+          : <HomePage openInsights={openInsights} />}
       <Footer goHome={goHome} />
     </div>
   )
@@ -326,7 +326,7 @@ function Header({ interior, goHome, openInsights, menuOpen, setMenuOpen }) {
   )
 }
 
-function HomePage({ openArticle, openInsights }) {
+function HomePage({ openInsights }) {
   return (
     <main>
       <section className="hero">
@@ -368,20 +368,6 @@ function HomePage({ openArticle, openInsights }) {
           <span>Typical engagements</span>
           <p>Independent technical review · Architecture and FMEDA support · Evidence and integration review · AI workflow assessment or pilot</p>
         </div>
-      </section>
-
-      <section className="insights-teaser" id="insights">
-        <div className="insights-teaser-copy">
-          <SectionTitle eyebrow="Technical insight" title="Evidence of how we think." />
-          <p>Concise analysis of evidence gaps, integration assumptions and safety claims—the same questions that shape our consultancy work.</p>
-          <a className="insights-index-link" href={INSIGHTS_PATH} onClick={openInsights}>Explore all insights <ArrowRight size={15} /></a>
-        </div>
-        <a className="insights-teaser-note" href={articlePath(articles[0])} onClick={(event) => openArticle(articles[0], event)}>
-          <div className="teaser-note-meta"><span>NOTE {articles[0].number}</span><span>{articles[0].category} / {articles[0].read}</span></div>
-          <h3>{articles[0].title}</h3>
-          <p>{articles[0].standfirst}</p>
-          <span className="read-fieldnote">Read technical note <ArrowRight size={15} /></span>
-        </a>
       </section>
 
       <section className="approach" id="approach">

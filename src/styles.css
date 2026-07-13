@@ -121,17 +121,6 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--green); outline
 .engagement-strip span { color: var(--green-dark); font: 600 9px 'IBM Plex Mono'; letter-spacing: 1px; text-transform: uppercase; }
 .engagement-strip p { margin: 0; color: var(--ink-soft); font-size: 11px; line-height: 1.6; }
 
-.insights-teaser { padding: 100px 8vw; border-bottom: 1px solid var(--ink); display: grid; grid-template-columns: 42% 58%; background: #eee8de; }
-.insights-teaser-copy { padding: 12px 7vw 12px 0; align-self: center; }
-.insights-teaser-copy .section-title { margin-bottom: 28px; }
-.insights-teaser-copy > p { max-width: 470px; margin: 0; color: var(--muted); font: 400 17px/1.65 Newsreader, serif; }
-.insights-index-link { width: fit-content; margin-top: 32px; padding-bottom: 6px; border-bottom: 1px solid var(--ink); display: inline-flex; align-items: center; gap: 9px; color: var(--ink); text-decoration: none; font-size: 11px; font-weight: 700; }
-.insights-teaser-note { min-height: 390px; padding: 36px 40px; border: 1px solid var(--ink); display: flex; flex-direction: column; color: var(--ink); background: var(--paper); text-decoration: none; }
-.teaser-note-meta { display: flex; justify-content: space-between; gap: 20px; color: var(--green-dark); font: 600 9px 'IBM Plex Mono'; letter-spacing: .8px; text-transform: uppercase; }
-.insights-teaser-note h3 { max-width: 760px; margin: auto 0 20px; font: 500 clamp(38px, 4vw, 58px)/1 Newsreader, serif; letter-spacing: -2px; }
-.insights-teaser-note > p { max-width: 660px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
-.insights-teaser-note .read-fieldnote { margin-top: 28px; }
-
 .insights-page-hero { min-height: 560px; display: grid; grid-template-columns: 10% 90%; border-bottom: 1px solid var(--ink); background-image: linear-gradient(rgba(16,27,27,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(16,27,27,.045) 1px, transparent 1px); background-size: 30px 30px; }
 .insights-page-index { padding-top: 42px; border-right: 1px solid var(--line); writing-mode: vertical-rl; justify-self: center; font: 500 9px 'IBM Plex Mono'; letter-spacing: 1.4px; }
 .insights-page-hero > div:last-child { align-self: center; padding: 90px 11vw 100px 7vw; }
@@ -279,11 +268,6 @@ footer > span { justify-self: end; color: #87786e; font: 500 8px 'IBM Plex Mono'
   .service { min-height: 225px; border-right: 0; }
   .service h3 { margin-top: 38px; }
   .engagement-strip { grid-template-columns: 1fr; gap: 10px; }
-  .insights-teaser { padding: 62px 24px; grid-template-columns: 1fr; gap: 40px; }
-  .insights-teaser-copy { padding: 0; }
-  .insights-teaser-note { min-height: 360px; padding: 28px 24px; }
-  .teaser-note-meta { flex-direction: column; gap: 7px; }
-  .insights-teaser-note h3 { font-size: 40px; letter-spacing: -1.5px; }
   .insights-page-hero { min-height: auto; grid-template-columns: 1fr; }
   .insights-page-index { display: none; }
   .insights-page-hero > div:last-child { padding: 72px 24px 76px; }
