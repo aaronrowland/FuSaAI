@@ -187,7 +187,7 @@ function HomePage({ openArticle }) {
         <div className="hero-index">FIELD NOTE / 00</div>
         <div className="hero-copy">
           <p className="kicker">Semiconductor design · Functional safety · Applied AI</p>
-          <h1>Functional safety,<br /><em>from IP block</em><br />to safety case.</h1>
+          <h1>Functional safety,<br /><em>from safety concept</em><br />to trusted silicon.</h1>
           <p className="hero-intro">A unique blend of semiconductor design, functional safety and applied AI experience—bringing new insight to the engineering processes, evidence and tools your teams already use.</p>
           <div className="hero-links">
             <a href="#contact">Discuss a programme <ArrowRight size={16} /></a>
