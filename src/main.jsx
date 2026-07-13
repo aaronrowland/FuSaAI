@@ -370,7 +370,7 @@ function HomePage({ openInsights }) {
       </section>
 
       <section className="approach" id="approach">
-        <SectionTitle eyebrow="How we work" title="Expert-led. Evidence-bound. Proportionate." />
+        <SectionTitle eyebrow="How we work" title="Built around your programme, not a standard playbook." />
         <div className="approach-grid">
           {[
             ['01', 'Frame', 'Define the safety context, decision to be made and evidence that would change it.'],
